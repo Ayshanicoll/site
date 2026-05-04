@@ -64,6 +64,7 @@
             grid-template-columns: 1.6fr 1fr;
             gap: 20px;
             margin-bottom: 30px;
+            align-items: start;
         }
 
         .section-header {
@@ -82,11 +83,11 @@
             width: 100%; 
             aspect-ratio: 4/3; 
             background-color: #ccd7d2; 
-            margin-bottom: 20px; 
             object-fit: cover; 
+            display: block;
         }
 
-        /* --- NOVO CARROSSEL DESLIZANTE --- */
+        /* --- CARROSSEL --- */
         .carousel-title { 
             text-align: center; 
             font-weight: bold; 
@@ -94,18 +95,16 @@
             text-transform: uppercase; 
         }
 
-        /* Container que esconde o que sobra e permite o deslize */
         .reels-carousel-container {
             width: 100%;
-            overflow-x: auto; /* Permite deslizar para os lados */
+            overflow-x: auto;
             padding-bottom: 15px;
-            scroll-snap-type: x mandatory; /* Faz os vídeos "encaixarem" na tela ao deslizar */
+            scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
         }
 
-        /* Barra de rolagem mais discreta */
         .reels-carousel-container::-webkit-scrollbar {
-            height: 6px;
+            height: 8px;
         }
         .reels-carousel-container::-webkit-scrollbar-thumb {
             background: var(--green-header);
@@ -113,19 +112,19 @@
         }
 
         .reels-wrapper { 
-            display: flex; /* Coloca os itens um ao lado do outro */
+            display: flex;
             gap: 15px; 
-            width: max-content; /* Garante que a largura seja do tamanho da soma dos vídeos */
+            width: max-content;
         }
 
         .reel-item { 
-            width: 200px; /* Largura fixa para cada "reel" */
+            width: 200px; 
             aspect-ratio: 9/16; 
             background-color: #000; 
             border-radius: 8px; 
             overflow: hidden;
-            scroll-snap-align: start; /* Onde o vídeo para ao deslizar */
-            flex-shrink: 0; /* Impede que o vídeo seja esmagado */
+            scroll-snap-align: start;
+            flex-shrink: 0;
         }
         .reel-item iframe { width: 100%; height: 100%; border: none; }
 
@@ -134,8 +133,8 @@
         /* Seções Extras */
         .extra-content {
             max-width: 900px;
-            margin: 40px auto;
-            padding: 0 20px 60px 20px;
+            margin: 0 auto;
+            padding: 40px 20px 60px 20px;
         }
 
         .large-banner {
@@ -177,7 +176,7 @@
             .side-by-side { flex-direction: column; }
             .side-by-side img, .side-by-side .text { width: 100%; }
             .content-grid { grid-template-columns: 1fr; }
-            .reel-item { width: 160px; } /* Vídeos um pouco menores no celular */
+            .reel-item { width: 160px; }
         }
     </style>
 </head>
@@ -213,7 +212,7 @@
         </div>
 
         <div class="right-col">
-            <img src="midia/fotos/imagem1.jfif" alt="Urna" class="side-image"
+            <img src="midia/fotos/imagem1.jfif" alt="Urna" class="side-image">
         </div>
     </div>
 
@@ -221,11 +220,11 @@
     
     <div class="reels-carousel-container">
         <div class="reels-wrapper">
-            <div class="reel-item"><iframe src="https://www.youtube.com/embed/v-t9v-3DAnc"></iframe></div>
-            <div class="reel-item"><iframe src="https://www.youtube.com/embed/mGat_sS2jH4"></iframe></div>
-            <div class="reel-item"><iframe src="https://www.youtube.com/embed/Yv8f-mH2MRE"></iframe></div>
-            <div class="reel-item"><iframe src="https://www.youtube.com/embed/SshzInMvU9Y"></iframe></div>
-            <div class="reel-item"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"></iframe></div>
+            <div class="reel-item"><iframe src="https://www.youtube.com/embed/v-t9v-3DAnc" allowfullscreen></iframe></div>
+            <div class="reel-item"><iframe src="https://www.youtube.com/embed/mGat_sS2jH4" allowfullscreen></iframe></div>
+            <div class="reel-item"><iframe src="https://www.youtube.com/embed/Yv8f-mH2MRE" allowfullscreen></iframe></div>
+            <div class="reel-item"><iframe src="https://www.youtube.com/embed/SshzInMvU9Y" allowfullscreen></iframe></div>
+            <div class="reel-item"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe></div>
         </div>
     </div>
 
