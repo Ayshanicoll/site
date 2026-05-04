@@ -17,6 +17,7 @@
             background-color: #fff;
             color: var(--text-dark);
             line-height: 1.5;
+            overflow-x: hidden;
         }
 
         .top-stripe {
@@ -25,44 +26,58 @@
             width: 100%;
         }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
+        /* --- HEADER E VÍDEO ESTILO BANNER ARAPONGAS (FULL WIDTH) --- */
+        .full-width-section {
+            width: 100%;
+            margin: 0;
+            padding: 0;
         }
 
-        /* Cabeçalho */
         .title-box {
             background-color: var(--light-gray-bg);
             text-align: center;
-            padding: 15px;
-            margin-bottom: 5px;
+            padding: 20px 10px;
         }
-        .title-box h1 { margin: 0; font-size: 2.2rem; }
+        .title-box h1 { margin: 0; font-size: 2rem; }
 
         .subtitle-box {
             background-color: var(--light-gray-bg);
             text-align: center;
-            padding: 10px;
-            margin-bottom: 25px;
+            padding: 0 10px 20px 10px;
             font-weight: bold;
             font-size: 0.9rem;
         }
 
-        /* Vídeo Principal */
-        .main-video-wrapper {
+        /* VÍDEO FORMATADO COMO FAIXA HORIZONTAL (BANNER) */
+        .main-video-banner {
             width: 100%;
-            aspect-ratio: 16/9;
+            height: 350px; /* Altura limitada para não ficar enorme */
             background-color: #000;
-            margin-bottom: 25px;
+            overflow: hidden;
+            position: relative;
         }
-        .main-video-wrapper iframe { width: 100%; height: 100%; border: none; }
+        
+        .main-video-banner iframe {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100vw;
+            height: 56.25vw; /* Mantém a proporção mas corta o excesso de altura */
+            transform: translate(-50%, -50%);
+            border: none;
+        }
 
-        /* Grid Conteúdo */
+        /* --- CONTEÚDO COM MARGENS --- */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
         .content-grid {
             display: grid;
             grid-template-columns: 1.6fr 1fr;
-            gap: 20px;
+            gap: 25px;
             margin-bottom: 30px;
             align-items: start;
         }
@@ -70,11 +85,11 @@
         .section-header {
             background-color: var(--light-gray-bg);
             text-align: center;
-            padding: 6px;
+            padding: 8px;
             font-weight: bold;
             text-transform: uppercase;
             font-size: 0.8rem;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
 
         .text-block { text-align: justify; font-size: 0.95rem; margin-bottom: 25px; }
@@ -82,34 +97,29 @@
         .side-image { 
             width: 100%; 
             aspect-ratio: 4/3; 
-            background-color: #ccd7d2; 
             object-fit: cover; 
             display: block;
         }
 
-        /* --- CARROSSEL --- */
+        /* --- CARROSSEL DISCRETO E FUNCIONAL --- */
         .carousel-title { 
             text-align: center; 
             font-weight: bold; 
-            margin: 40px 0 15px 0; 
+            margin: 20px 0 15px 0; 
             text-transform: uppercase; 
+            font-size: 0.85rem;
         }
 
         .reels-carousel-container {
             width: 100%;
             overflow-x: auto;
+            display: block;
             padding-bottom: 15px;
-            scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
         }
 
-        .reels-carousel-container::-webkit-scrollbar {
-            height: 8px;
-        }
-        .reels-carousel-container::-webkit-scrollbar-thumb {
-            background: var(--green-header);
-            border-radius: 10px;
-        }
+        .reels-carousel-container::-webkit-scrollbar { height: 6px; }
+        .reels-carousel-container::-webkit-scrollbar-thumb { background: var(--green-header); border-radius: 10px; }
 
         .reels-wrapper { 
             display: flex;
@@ -118,29 +128,25 @@
         }
 
         .reel-item { 
-            width: 200px; 
-            aspect-ratio: 9/16; 
+            width: 160px; /* Tamanho reduzido */
+            height: 280px; 
             background-color: #000; 
             border-radius: 8px; 
             overflow: hidden;
-            scroll-snap-align: start;
             flex-shrink: 0;
         }
         .reel-item iframe { width: 100%; height: 100%; border: none; }
 
-        footer { background-color: var(--green-header); height: 40px; margin-top: 60px; }
-
-        /* Seções Extras */
+        /* --- SEÇÕES EXTRAS --- */
         .extra-content {
             max-width: 900px;
             margin: 0 auto;
-            padding: 40px 20px 60px 20px;
+            padding: 20px;
         }
 
         .large-banner {
             width: 100%;
-            aspect-ratio: 16/9;
-            background-color: #f0f0f0;
+            height: 300px;
             object-fit: cover;
             margin-bottom: 25px;
             display: block;
@@ -150,7 +156,6 @@
             text-align: center;
             font-size: 1.1rem;
             margin-bottom: 40px;
-            padding: 0 10px;
         }
 
         .side-by-side {
@@ -159,24 +164,16 @@
             align-items: flex-start;
         }
 
-        .side-by-side img {
-            width: 45%;
-            aspect-ratio: 4/3;
-            background-color: #ccd7d2;
-            object-fit: cover;
-        }
+        .side-by-side img { width: 45%; height: auto; object-fit: cover; }
+        .side-by-side .text { width: 55%; text-align: justify; font-size: 0.95rem; }
 
-        .side-by-side .text {
-            width: 55%;
-            text-align: justify;
-            font-size: 0.95rem;
-        }
+        footer { background-color: var(--green-header); height: 40px; margin-top: 40px; }
 
         @media (max-width: 600px) {
             .side-by-side { flex-direction: column; }
             .side-by-side img, .side-by-side .text { width: 100%; }
             .content-grid { grid-template-columns: 1fr; }
-            .reel-item { width: 160px; }
+            .main-video-banner { height: 200px; }
         }
     </style>
 </head>
@@ -184,8 +181,7 @@
 
 <div class="top-stripe"></div>
 
-<div class="container">
-    
+<div class="full-width-section">
     <div class="title-box">
         <h1>Por Dentro Das Eleições</h1>
     </div>
@@ -193,15 +189,17 @@
         funcionamento e bastidores do processo eleitoral
     </div>
 
-    <div class="main-video-wrapper">
-        <iframe src="https://www.youtube.com/embed/SshzInMvU9Y" allowfullscreen></iframe>
+    <div class="main-video-banner">
+        <iframe src="https://www.youtube.com/embed/SshzInMvU9Y?autoplay=1&mute=1&loop=1&playlist=SshzInMvU9Y" allowfullscreen></iframe>
     </div>
+</div>
 
+<div class="container">
     <div class="content-grid">
         <div class="left-col">
             <div class="section-header">SUBTÍTULO</div>
             <div class="text-block">
-                O sistema de votação é monitorado por diversas camadas de criptografia. Cada passo rastro digital auditável garante a integridade do pleito.
+                O sistema de votação é monitorado por diversas camadas de criptografia. Cada passo gera um rastro digital auditável que garante a integridade do pleito.
             </div>
 
             <div class="section-header">SUBTÍTULO</div>
@@ -216,24 +214,20 @@
         </div>
     </div>
 
-    <div class="carousel-title">CARROSSEL DE VÍDEOS</div>
+    <div class="carousel-title">VÍDEOS RELACIONADOS</div>
     
     <div class="reels-carousel-container">
         <div class="reels-wrapper">
-            <div class="reel-item"><iframe src="https://www.youtube.com/embed/v-t9v-3DAnc" allowfullscreen></iframe></div>
-            <div class="reel-item"><iframe src="https://www.youtube.com/embed/mGat_sS2jH4" allowfullscreen></iframe></div>
-            <div class="reel-item"><iframe src="https://www.youtube.com/embed/Yv8f-mH2MRE" allowfullscreen></iframe></div>
-            <div class="reel-item"><iframe src="https://www.youtube.com/embed/SshzInMvU9Y" allowfullscreen></iframe></div>
-            <div class="reel-item"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe></div>
+            <div class="reel-item"><iframe src="https://www.youtube.com/embed/v-t9v-3DAnc"></iframe></div>
+            <div class="reel-item"><iframe src="https://www.youtube.com/embed/mGat_sS2jH4"></iframe></div>
+            <div class="reel-item"><iframe src="https://www.youtube.com/embed/Yv8f-mH2MRE"></iframe></div>
+            <div class="reel-item"><iframe src="https://www.youtube.com/embed/SshzInMvU9Y"></iframe></div>
+            <div class="reel-item"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"></iframe></div>
         </div>
     </div>
-
 </div>
 
-<footer></footer>
-
 <div class="extra-content">
-    
     <img src="midia/fotos/imagem2.jfif" alt="Banner Final" class="large-banner">
 
     <div class="bottom-text-full">
@@ -247,8 +241,9 @@
             os entrevistados ou trazer dados complementares para fechar a reportagem de forma informativa.
         </div>
     </div>
-
 </div>
+
+<footer></footer>
 
 </body>
 </html>
