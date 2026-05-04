@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportagem | Por Dentro Das Eleições</title>
+    <style>
+        :root {
+            --green-header: #006b33;
+            --light-gray-bg: #e9f0ee;
+            --text-dark: #000;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0; padding: 0;
+            background-color: #fff;
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+
+        .top-stripe {
+            background-color: var(--green-header);
+            height: 35px;
+            width: 100%;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Cabeçalho */
+        .title-box {
+            background-color: var(--light-gray-bg);
+            text-align: center;
+            padding: 15px;
+            margin-bottom: 5px;
+        }
+        .title-box h1 { margin: 0; font-size: 2.2rem; }
+
+        .subtitle-box {
+            background-color: var(--light-gray-bg);
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 25px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        /* Vídeo Principal */
+        .main-video-wrapper {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background-color: #000;
+            margin-bottom: 25px;
+        }
+        .main-video-wrapper iframe { width: 100%; height: 100%; border: none; }
+
+        /* Grid Conteúdo */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .section-header {
+            background-color: var(--light-gray-bg);
+            text-align: center;
+            padding: 6px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            margin-bottom: 12px;
+        }
+
+        .text-block { text-align: justify; font-size: 0.95rem; margin-bottom: 25px; }
+
+        .side-image { 
+            width: 100%; 
+            aspect-ratio: 4/3; 
+            background-color: #ccd7d2; 
+            margin-bottom: 20px; 
+            object-fit: cover; 
+        }
+
+        /* --- NOVO CARROSSEL DESLIZANTE --- */
+        .carousel-title { 
+            text-align: center; 
+            font-weight: bold; 
+            margin: 40px 0 15px 0; 
+            text-transform: uppercase; 
+        }
+
+        /* Container que esconde o que sobra e permite o deslize */
+        .reels-carousel-container {
+            width: 100%;
+            overflow-x: auto; /* Permite deslizar para os lados */
+            padding-bottom: 15px;
+            scroll-snap-type: x mandatory; /* Faz os vídeos "encaixarem" na tela ao deslizar */
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Barra de rolagem mais discreta */
+        .reels-carousel-container::-webkit-scrollbar {
+            height: 6px;
+        }
+        .reels-carousel-container::-webkit-scrollbar-thumb {
+            background: var(--green-header);
+            border-radius: 10px;
+        }
+
+        .reels-wrapper { 
+            display: flex; /* Coloca os itens um ao lado do outro */
+            gap: 15px; 
+            width: max-content; /* Garante que a largura seja do tamanho da soma dos vídeos */
+        }
+
+        .reel-item { 
+            width: 200px; /* Largura fixa para cada "reel" */
+            aspect-ratio: 9/16; 
+            background-color: #000; 
+            border-radius: 8px; 
+            overflow: hidden;
+            scroll-snap-align: start; /* Onde o vídeo para ao deslizar */
+            flex-shrink: 0; /* Impede que o vídeo seja esmagado */
+        }
+        .reel-item iframe { width: 100%; height: 100%; border: none; }
+
+        footer { background-color: var(--green-header); height: 40px; margin-top: 60px; }
+
+        /* Seções Extras */
+        .extra-content {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px 60px 20px;
+        }
+
+        .large-banner {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background-color: #f0f0f0;
+            object-fit: cover;
+            margin-bottom: 25px;
+            display: block;
+        }
+
+        .bottom-text-full {
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            padding: 0 10px;
+        }
+
+        .side-by-side {
+            display: flex;
+            gap: 25px;
+            align-items: flex-start;
+        }
+
+        .side-by-side img {
+            width: 45%;
+            aspect-ratio: 4/3;
+            background-color: #ccd7d2;
+            object-fit: cover;
+        }
+
+        .side-by-side .text {
+            width: 55%;
+            text-align: justify;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 600px) {
+            .side-by-side { flex-direction: column; }
+            .side-by-side img, .side-by-side .text { width: 100%; }
+            .content-grid { grid-template-columns: 1fr; }
+            .reel-item { width: 160px; } /* Vídeos um pouco menores no celular */
+        }
+    </style>
+</head>
+<body>
+
+<div class="top-stripe"></div>
+
+<div class="container">
+    
+    <div class="title-box">
+        <h1>Por Dentro Das Eleições</h1>
+    </div>
+    <div class="subtitle-box">
+        funcionamento e bastidores do processo eleitoral
+    </div>
+
+    <div class="main-video-wrapper">
+        <iframe src="https://www.youtube.com/embed/SshzInMvU9Y" allowfullscreen></iframe>
+    </div>
+
+    <div class="content-grid">
+        <div class="left-col">
+            <div class="section-header">SUBTÍTULO</div>
+            <div class="text-block">
+                O sistema de votação é monitorado por diversas camadas de criptografia. Cada passo rastro digital auditável garante a integridade do pleito.
+            </div>
+
+            <div class="section-header">SUBTÍTULO</div>
+            <div class="text-block">
+                <strong>Transparência Total</strong><br>
+                Qualquer cidadão pode conferir os boletins de urna (BU) impressos, comparando-os com os dados oficializados.
+            </div>
+        </div>
+
+        <div class="right-col">
+            <img src="https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?auto=format&fit=crop&w=400&q=80" alt="Urna" class="side-image">
+        </div>
+    </div>
+
+    <div class="carousel-title">CARROSSEL DE VÍDEOS</div>
+    
+    <div class="reels-carousel-container">
+        <div class="reels-wrapper">
+            <div class="reel-item"><iframe src="https://www.youtube.com/embed/v-t9v-3DAnc"></iframe></div>
+            <div class="reel-item"><iframe src="https://www.youtube.com/embed/mGat_sS2jH4"></iframe></div>
+            <div class="reel-item"><iframe src="https://www.youtube.com/embed/Yv8f-mH2MRE"></iframe></div>
+            <div class="reel-item"><iframe src="https://www.youtube.com/embed/SshzInMvU9Y"></iframe></div>
+            <div class="reel-item"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"></iframe></div>
+        </div>
+    </div>
+
+</div>
+
+<footer></footer>
+
+<div class="extra-content">
+    
+    <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=900&q=80" alt="Banner Final" class="large-banner">
+
+    <div class="bottom-text-full">
+        Este é um parágrafo de destaque sobre o trabalho finalizado e a importância da democracia no Brasil.
+    </div>
+
+    <div class="side-by-side">
+        <img src="https://images.unsplash.com/photo-1577563906417-45c1d3024fbd?auto=format&fit=crop&w=400&q=80" alt="Detalhe">
+        <div class="text">
+            Aqui vai a descrição detalhada que fica ao lado da foto. Você pode falar sobre os bastidores da produção, 
+            os entrevistados ou trazer dados complementares para fechar a reportagem de forma informativa.
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
