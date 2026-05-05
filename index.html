@@ -8,172 +8,171 @@
         :root {
             --green-header: #006b33;
             --light-gray-bg: #e9f0ee;
-            --text-dark: #000;
+            --text-dark: #333;
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0; padding: 0;
             background-color: #fff;
             color: var(--text-dark);
-            line-height: 1.5;
-            overflow-x: hidden;
+            line-height: 1.6;
         }
 
+        /* --- HEADER --- */
         .top-stripe {
             background-color: var(--green-header);
-            height: 35px;
+            height: 10px;
             width: 100%;
-        }
-
-        /* --- HEADER E VÍDEO ESTILO BANNER ARAPONGAS (FULL WIDTH) --- */
-        .full-width-section {
-            width: 100%;
-            margin: 0;
-            padding: 0;
         }
 
         .title-box {
-            background-color: var(--light-gray-bg);
             text-align: center;
-            padding: 20px 10px;
+            padding: 30px 10px 10px 10px;
         }
-        .title-box h1 { margin: 0; font-size: 2rem; }
+        .title-box h1 { 
+            margin: 0; 
+            font-size: 2.2rem; 
+            color: var(--green-header);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
         .subtitle-box {
-            background-color: var(--light-gray-bg);
             text-align: center;
-            padding: 0 10px 20px 10px;
-            font-weight: bold;
-            font-size: 0.9rem;
+            padding: 0 10px 30px 10px;
+            font-size: 1rem;
+            color: #666;
+            font-style: italic;
         }
 
-        /* VÍDEO FORMATADO COMO FAIXA HORIZONTAL (BANNER) */
-        .main-video-banner {
+        /* --- VÍDEO BANNER PRINCIPAL --- */
+        .main-video-container {
             width: 100%;
-            height: 350px; /* Altura limitada para não ficar enorme */
+            max-width: 1100px;
+            margin: 0 auto;
             background-color: #000;
+            aspect-ratio: 16 / 9;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             overflow: hidden;
-            position: relative;
+            border-radius: 4px;
         }
         
-        .main-video-banner iframe {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 100vw;
-            height: 56.25vw; /* Mantém a proporção mas corta o excesso de altura */
-            transform: translate(-50%, -50%);
+        .main-video-container iframe {
+            width: 100%;
+            height: 100%;
             border: none;
         }
 
-        /* --- CONTEÚDO COM MARGENS --- */
+        /* --- CONTEÚDO --- */
         .container {
-            max-width: 900px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 50px 20px;
         }
 
         .content-grid {
             display: grid;
-            grid-template-columns: 1.6fr 1fr;
-            gap: 25px;
-            margin-bottom: 30px;
-            align-items: start;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 40px;
+            margin-bottom: 60px;
+            align-items: center;
         }
 
         .section-header {
-            background-color: var(--light-gray-bg);
-            text-align: center;
-            padding: 8px;
             font-weight: bold;
             text-transform: uppercase;
-            font-size: 0.8rem;
-            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: var(--green-header);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .section-header::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #ddd;
+            margin-left: 15px;
         }
 
-        .text-block { text-align: justify; font-size: 0.95rem; margin-bottom: 25px; }
+        .text-block { font-size: 1.05rem; margin-bottom: 25px; text-align: justify; }
 
         .side-image { 
             width: 100%; 
-            aspect-ratio: 4/3; 
-            object-fit: cover; 
-            display: block;
+            border-radius: 8px;
+            object-fit: cover;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
         }
 
-        /* --- CARROSSEL DISCRETO E FUNCIONAL --- */
+        /* --- CARROSSEL (AJUSTADO PARA VÍDEOS VERTICAIS DO DRIVE) --- */
         .carousel-title { 
             text-align: center; 
             font-weight: bold; 
-            margin: 20px 0 15px 0; 
-            text-transform: uppercase; 
-            font-size: 0.85rem;
+            margin: 40px 0 20px 0; 
+            font-size: 1.2rem;
         }
 
         .reels-carousel-container {
             width: 100%;
             overflow-x: auto;
-            display: block;
-            padding-bottom: 15px;
-            -webkit-overflow-scrolling: touch;
+            padding-bottom: 20px;
         }
-
-        .reels-carousel-container::-webkit-scrollbar { height: 6px; }
-        .reels-carousel-container::-webkit-scrollbar-thumb { background: var(--green-header); border-radius: 10px; }
 
         .reels-wrapper { 
             display: flex;
-            gap: 15px; 
+            gap: 20px; 
             width: max-content;
+            padding: 0 10px;
         }
 
         .reel-item { 
-            width: 160px; /* Tamanho reduzido */
-            height: 280px; 
+            width: 210px; /* Largura do Card */
+            height: 370px; /* Altura do Card */
             background-color: #000; 
-            border-radius: 8px; 
+            border-radius: 12px; 
             overflow: hidden;
             flex-shrink: 0;
+            border: 1px solid #eee;
+            position: relative;
         }
-        .reel-item iframe { width: 100%; height: 100%; border: none; }
 
-        /* --- SEÇÕES EXTRAS --- */
+        /* TRUQUE DE ZOOM: Elimina as faixas pretas laterais que o Drive coloca em vídeos verticais */
+        .reel-item iframe { 
+            width: 168%; /* Aumenta a largura do player interno */
+            height: 100%; 
+            margin-left: -34%; /* Centraliza o corte para esconder as bordas do Drive */
+            border: none;
+        }
+
+        /* --- FOOTER E EXTRAS --- */
         .extra-content {
-            max-width: 900px;
+            background-color: var(--light-gray-bg);
+            padding: 60px 0;
+            margin-top: 40px;
+        }
+
+        .inner-extra {
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 20px;
-        }
-
-        .large-banner {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            margin-bottom: 25px;
-            display: block;
-        }
-
-        .bottom-text-full {
-            text-align: center;
-            font-size: 1.1rem;
-            margin-bottom: 40px;
+            padding: 0 20px;
         }
 
         .side-by-side {
             display: flex;
-            gap: 25px;
-            align-items: flex-start;
+            gap: 40px;
+            align-items: center;
         }
 
-        .side-by-side img { width: 45%; height: auto; object-fit: cover; }
-        .side-by-side .text { width: 55%; text-align: justify; font-size: 0.95rem; }
+        .side-by-side img { width: 40%; border-radius: 8px; }
+        .side-by-side .text { width: 60%; font-size: 1.05rem; }
 
-        footer { background-color: var(--green-header); height: 40px; margin-top: 40px; }
+        footer { background-color: var(--green-header); height: 60px; margin-top: 60px; }
 
-        @media (max-width: 600px) {
-            .side-by-side { flex-direction: column; }
+        @media (max-width: 768px) {
+            .content-grid, .side-by-side { grid-template-columns: 1fr; flex-direction: column; }
             .side-by-side img, .side-by-side .text { width: 100%; }
-            .content-grid { grid-template-columns: 1fr; }
-            .main-video-banner { height: 200px; }
+            .title-box h1 { font-size: 1.6rem; }
         }
     </style>
 </head>
@@ -181,31 +180,28 @@
 
 <div class="top-stripe"></div>
 
-<div class="full-width-section">
-    <div class="title-box">
-        <h1>Por Dentro Das Eleições</h1>
-    </div>
-    <div class="subtitle-box">
-        funcionamento e bastidores do processo eleitoral
-    </div>
+<div class="title-box">
+    <h1>Por Dentro Das Eleições</h1>
+</div>
+<div class="subtitle-box">
+    O funcionamento e os bastidores do processo eleitoral brasileiro
+</div>
 
-    <div class="main-video-banner">
-        <iframe src="https://www.youtube.com/embed/SshzInMvU9Y?autoplay=1&mute=1&loop=1&playlist=SshzInMvU9Y" allowfullscreen></iframe>
-    </div>
+<div class="main-video-container">
+    <iframe src="https://drive.google.com/file/d/1vj_fVozf56IX4zvyZhcewMG2cyiQSk7I/preview" allow="autoplay"></iframe>
 </div>
 
 <div class="container">
     <div class="content-grid">
         <div class="left-col">
-            <div class="section-header">SUBTÍTULO</div>
+            <div class="section-header">Segurança e Tecnologia</div>
             <div class="text-block">
-                O sistema de votação é monitorado por diversas camadas de criptografia. Cada passo gera um rastro digital auditável que garante a integridade do pleito.
+                O sistema de votação eletrônica brasileiro é referência mundial em termos de agilidade e segurança. Através de camadas sobrepostas de criptografia, o processo garante que o voto depositado seja exatamente o voto computado.
             </div>
 
-            <div class="section-header">SUBTÍTULO</div>
+            <div class="section-header">Auditoria e Transparência</div>
             <div class="text-block">
-                <strong>Transparência Total</strong><br>
-                Qualquer cidadão pode conferir os boletins de urna (BU) impressos, comparando-os com os dados oficializados.
+                Abertura do código-fonte, testes públicos de segurança e a conferência dos boletins de urna permitem que instituições e cidadãos acompanhem cada etapa da apuração.
             </div>
         </div>
 
@@ -218,27 +214,23 @@
     
     <div class="reels-carousel-container">
         <div class="reels-wrapper">
-            <div class="reel-item"><iframe src="https://www.youtube.com/embed/v-t9v-3DAnc"></iframe></div>
-            <div class="reel-item"><iframe src="https://www.youtube.com/embed/mGat_sS2jH4"></iframe></div>
-            <div class="reel-item"><iframe src="https://www.youtube.com/embed/Yv8f-mH2MRE"></iframe></div>
-            <div class="reel-item"><iframe src="https://www.youtube.com/embed/SshzInMvU9Y"></iframe></div>
-            <div class="reel-item"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"></iframe></div>
+            <div class="reel-item"><iframe src="https://drive.google.com/file/d/1vj_fVozf56IX4zvyZhcewMG2cyiQSk7I/preview"></iframe></div>
+            <div class="reel-item"><iframe src="https://drive.google.com/file/d/1vj_fVozf56IX4zvyZhcewMG2cyiQSk7I/preview"></iframe></div>
+            <div class="reel-item"><iframe src="https://drive.google.com/file/d/1vj_fVozf56IX4zvyZhcewMG2cyiQSk7I/preview"></iframe></div>
+            <div class="reel-item"><iframe src="https://drive.google.com/file/d/1vj_fVozf56IX4zvyZhcewMG2cyiQSk7I/preview"></iframe></div>
+            <div class="reel-item"><iframe src="https://drive.google.com/file/d/1vj_fVozf56IX4zvyZhcewMG2cyiQSk7I/preview"></iframe></div>
         </div>
     </div>
 </div>
 
 <div class="extra-content">
-    <img src="midia/fotos/imagem2.jfif" alt="Banner Final" class="large-banner">
-
-    <div class="bottom-text-full">
-        Este é um parágrafo de destaque sobre o trabalho finalizado e a importância da democracia no Brasil.
-    </div>
-
-    <div class="side-by-side">
-        <img src="midia/fotos/imagem3.jfif" alt="Detalhe">
-        <div class="text">
-            Aqui vai a descrição detalhada que fica ao lado da foto. Você pode falar sobre os bastidores da produção, 
-            os entrevistados ou trazer dados complementares para fechar a reportagem de forma informativa.
+    <div class="inner-extra">
+        <div class="side-by-side">
+            <img src="midia/fotos/imagem3.jfif" alt="Produção">
+            <div class="text">
+                <div class="section-header">Bastidores</div>
+                Esta reportagem foi produzida com o objetivo de desmistificar o processo eleitoral. Entrevistamos especialistas e técnicos para trazer a você a informação mais precisa sobre como a democracia funciona na prática.
+            </div>
         </div>
     </div>
 </div>
