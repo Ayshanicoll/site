@@ -3,276 +3,392 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reportagem | Por Dentro Das Eleições</title>
+    <title>Por Dentro Das Eleições</title>
+    <link rel="icon" type="image/png" href="midia/fotos/logouel2.png">
     <style>
         :root {
-            --green-header: #006b33;
-            --light-gray-bg: #e9f0ee;
-            --text-dark: #333;
+            --green-theme: #006b33; 
+            --green-dark: #004d25;
+            --text-color: #333;
+            --light-gray: #ddd;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0; padding: 0;
-            background-color: #fff;
-            color: var(--text-dark);
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
             line-height: 1.6;
+            background-color: #fff;
+            overflow-x: hidden;
         }
 
-        /* --- HEADER --- */
-        .top-stripe {
-            background-color: var(--green-header);
-            height: 10px;
-            width: 100%;
+        /* --- CABEÇALHO --- */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: var(--green-theme);
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
-        .title-box {
-            text-align: center;
-            padding: 30px 10px 10px 10px;
+        .logo-container {
+            height: 45px;
+            display: flex;
+            align-items: center;
         }
-        .title-box h1 { 
-            margin: 0; 
-            font-size: 2.2rem; 
-            color: var(--green-header);
+
+        .logo-container img {
+            height: 100%;
+            width: auto;
+        }
+
+        /* --- NAVEGAÇÃO DESKTOP --- */
+        .header-info {
+            display: flex;
+            gap: 10px;
+        }
+
+        .contact-button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            font-size: 11px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
         }
 
-        .subtitle-box {
-            text-align: center;
-            padding: 0 10px 30px 10px;
-            font-size: 1rem;
-            color: #666;
-            font-style: italic;
+        .contact-button:hover {
+            background: rgba(255, 255, 255, 0.2);
         }
 
-        /* --- VÍDEO BANNER PRINCIPAL --- */
-        .main-video-container {
+        .icon-circle {
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* --- MENU HAMBÚRGUER --- */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1100;
+        }
+
+        .menu-toggle span {
+            width: 30px;
+            height: 3px;
+            background: white;
+            border-radius: 10px;
+            transition: all 0.3s linear;
+            position: relative;
+            transform-origin: 1px;
+        }
+
+        .menu-toggle.open span:nth-child(1) { transform: rotate(45deg); }
+        .menu-toggle.open span:nth-child(2) { opacity: 0; transform: translateX(20px); }
+        .menu-toggle.open span:nth-child(3) { transform: rotate(-45deg); }
+
+        /* --- OVERLAY --- */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            max-width: 1100px;
-            margin: 0 auto;
-            background-color: #000;
-            aspect-ratio: 16 / 9;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            overflow: hidden;
-            border-radius: 4px;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1050;
         }
-        
-        .main-video-container iframe {
+
+        .overlay.active { display: block; }
+
+        /* --- CONTEÚDO --- */
+        .container {
+            max-width: 900px; 
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .main-title {
+            font-size: 2.2rem;
+            color: var(--green-theme);
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        /* --- CORREÇÃO DO VÍDEO --- */
+        .video-box {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background-color: #000;
+            margin: 30px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative; /* Necessário para o iframe absoluto */
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .video-box iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             border: none;
         }
 
-        /* --- CONTEÚDO --- */
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 50px 20px;
-        }
-
-        .content-grid {
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: 40px;
-            margin-bottom: 60px;
-            align-items: center;
-        }
-
-        .section-header {
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            color: var(--green-header);
-            margin-bottom: 10px;
+        .section-header-container {
             display: flex;
             align-items: center;
+            margin-bottom: 12px;
+            margin-top: 30px;
         }
-        .section-header::after {
+
+        .section-header-text {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: var(--green-theme);
+            text-transform: uppercase;
+            padding-right: 15px;
+        }
+
+        .section-header-container::after {
             content: "";
             flex: 1;
             height: 1px;
-            background: #ddd;
-            margin-left: 15px;
+            background: var(--light-gray);
         }
 
-        .text-block { font-size: 1.05rem; margin-bottom: 25px; text-align: justify; }
-
-        .side-image { 
-            width: 100%; 
-            border-radius: 8px;
-            object-fit: cover;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        footer {
+            background-color: var(--green-theme);
+            height: 50px;
+            margin-top: 50px;
         }
 
-        /* --- CARROSSEL (AJUSTADO PARA VÍDEOS VERTICAIS DO DRIVE) --- */
-        .carousel-title { 
-            text-align: center; 
-            font-weight: bold; 
-            margin: 40px 0 20px 0; 
-            font-size: 1.2rem;
-        }
-
-        .reels-carousel-container {
-            width: 100%;
-            overflow-x: auto;
-            padding-bottom: 20px;
-        }
-
-        .reels-wrapper { 
-            display: flex;
-            gap: 20px; 
-            width: max-content;
-            padding: 0 10px;
-        }
-
-        .reel-item { 
-            width: 210px; /* Largura do Card */
-            height: 370px; /* Altura do Card */
-            background-color: #000; 
-            border-radius: 12px; 
-            overflow: hidden;
-            flex-shrink: 0;
-            border: 1px solid #eee;
-            position: relative;
-        }
-
-        /* TRUQUE DE ZOOM: Elimina as faixas pretas laterais que o Drive coloca em vídeos verticais */
-        .reel-item iframe { 
-            width: 168%; /* Aumenta a largura do player interno */
-            height: 100%; 
-            margin-left: -34%; /* Centraliza o corte para esconder as bordas do Drive */
-            border: none;
-        }
-
-        /* --- FOOTER E EXTRAS --- */
-        .extra-content {
-            background-color: var(--light-gray-bg);
-            padding: 60px 0;
-            margin-top: 40px;
-        }
-
-        .inner-extra {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .side-by-side {
-            display: flex;
-            gap: 40px;
-            align-items: center;
-        }
-
-        .side-by-side img { width: 40%; border-radius: 8px; }
-        .side-by-side .text { width: 60%; font-size: 1.05rem; }
-
-        footer { background-color: var(--green-header); height: 60px; margin-top: 60px; }
-
+        /* --- RESPONSIVIDADE MOBILE --- */
         @media (max-width: 768px) {
-            .content-grid, .side-by-side { grid-template-columns: 1fr; flex-direction: column; }
-            .side-by-side img, .side-by-side .text { width: 100%; }
-            .title-box h1 { font-size: 1.6rem; }
+            .menu-toggle { display: flex; }
+
+            .header-info {
+                position: fixed;
+                right: -100%;
+                top: 0;
+                height: 100vh;
+                width: 260px;
+                background-color: var(--green-dark);
+                flex-direction: column;
+                padding: 80px 20px;
+                transition: right 0.4s ease-in-out;
+                z-index: 1060;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+            }
+
+            .header-info.active {
+                right: 0;
+            }
+
+            .contact-button {
+                font-size: 14px;
+                padding: 15px;
+                width: 100%;
+                border-radius: 8px;
+                background: rgba(255, 255, 255, 0.05);
+                margin-bottom: 10px;
+            }
+
+            .main-title { font-size: 1.6rem; }
         }
     </style>
 </head>
 <body>
 
-<div class="top-stripe"></div>
+<div class="overlay" id="overlay"></div>
 
-<div class="title-box">
-    <h1>Por Dentro Das Eleições</h1>
-</div>
-<div class="subtitle-box">
-    O funcionamento e os bastidores do processo eleitoral brasileiro
-</div>
+<header>
+    <div class="logo-container">
+       <img src="midia/fotos/logouel.png" alt="Logo UEL">
+    </div>
 
-<div class="main-video-container">
-    <iframe src="https://drive.google.com/file/d/1vj_fVozf56IX4zvyZhcewMG2cyiQSk7I/preview" allow="autoplay"></iframe>
-</div>
+    <button class="menu-toggle" id="menu-btn">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <nav class="header-info" id="nav-menu">
+        <a href="#" class="contact-button">
+            INÍCIO 
+            <div class="icon-circle">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="var(--green-theme)"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            </div>
+        </a>
+        <a href="#" class="contact-button">
+            VÍDEOS 
+            <div class="icon-circle">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="var(--green-theme)"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+        </a>
+        <a href="#" class="contact-button">
+             PODCASTS
+            <div class="icon-circle">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="var(--green-theme)"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zM17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
+            </div>
+        </a>
+        <a href="#" class="contact-button">
+             EQUIPE
+            <div class="icon-circle">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="var(--green-theme)"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+            </div>
+        </a>
+         <a href="#" class="contact-button">
+            CONTATO 
+            <div class="icon-circle">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="var(--green-theme)"><path d="M20 15.5c-1.2 0-2.4-.2-3.6-.6-.3-.1-.7 0-1 .2l-2.2 2.2c-2.8-1.4-5.1-3.8-6.6-6.6l2.2-2.2c.3-.3.4-.7.2-1-.3-1.1-.5-2.3-.5-3.5 0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1 0 9.4 7.6 17 17 17 .6 0 1-.4 1-1v-3.5c0-.6-.4-1-1-1z"/></svg>
+            </div>
+        </a>
+    </nav>
+</header>
 
 <div class="container">
-    <div class="content-grid">
-        <div class="left-col">
-            <div class="section-header">Introdução</div>
-            <div class="text-block">
-                As eleições são uma das principais formas de exercício da democracia, permitindo que a população escolha seus representantes por meio do voto. Apesar de sua importância, o processo eleitoral que antecede os dias de votação ainda não é amplamente conhecido.
-            </div>
-
-            <div class="section-header">O processo eleitoral</div>
-            <div class="text-block">
-O processo eleitoral não começa nem termina no dia da votação.
-A preparação para uma eleição pode ter início logo após o encerramento do pleito anterior, funcionando como um ciclo contínuo de organização que pode se estender por aproximadamente dois anos até a próxima eleição.
-Esse funcionamento contínuo do processo eleitoral é reforçado pelo calendário oficial estabelecido pelo Tribunal Superior Eleitoral, que organiza todas as etapas das eleições com antecedência. De acordo com a resolução que define o calendário das eleições de 2026, as atividades começam cerca de um ano antes do primeiro turno, incluindo fases de planejamento, testes e fiscalização dos sistemas eleitorais.
-Esse processo envolve diferentes etapas técnicas, logísticas e operacionais.
-            </div>
-            <div class="section-header">Como funcionam as eleições</div>
-            <div class="text-block">
-                O processo eleitoral envolve uma série de etapas que vão desde a emissão do título de eleitor até a votação e a apuração dos resultados.
-Embora o eleitor tenha contato direto apenas com o momento da votação, existe uma estrutura anterior complexa que garante o funcionamento do sistema.
-Uma das principais partes desse processo é a urna eletrônica, utilizada para registrar e contabilizar os votos de forma digital.
-Além da parte visível ao eleitor, há toda uma estrutura de bastidores que envolve organização, preparação técnica e testes dos sistemas utilizados. Essa dimensão do processo é pouco conhecida pelo público, mas importante para garantir que as eleições ocorram de forma segura e organizada.
-            </div>
-            <div class="section-header">Treinamento de equipes</div>
-            <div class="text-block">
-                Outra parte importante dos bastidores das eleições é o treinamento das pessoas envolvidas diretamente na votação. Mesários, técnicos e demais colaboradores passam por orientações para desempenhar suas funções de forma adequada no dia da eleição.
-Os mesários, por exemplo, são responsáveis por organizar a seção eleitoral, conferir documentos dos eleitores e garantir que o processo de votação aconteça da maneira correta. Já as equipes técnicas atuam na instalação, manutenção e eventual substituição das urnas eletrônicas.
-Esse preparo é importante para evitar falhas e garantir que o atendimento ao eleitor seja eficiente.
-            </div>
-            <div class="section-header">Organização e logística </div>
-            <div class="text-block">
-                Para que as eleições aconteçam em todo o território nacional, é necessária uma operação logística de grande escala, o que exige planejamento detalhado para que urnas eletrônicas, equipamentos e equipes cheguem a todos os locais de votação, incluindo regiões de difícil acesso.
-Esse processo envolve o transporte seguro das urnas, a definição dos locais de votação e a organização das seções eleitorais. Em muitos casos, a distribuição dos equipamentos precisa ser feita com antecedência e acompanhada por equipes responsáveis por garantir a integridade do material.
-Além disso, há um trabalho intenso de organização interna, que inclui cronogramas, divisão de tarefas e acompanhamento de cada etapa do processo eleitoral.
-O calendário eleitoral define prazos específicos para diversas etapas, como o registro de candidaturas, organização de partidos e preparação das equipes envolvidas. Essas datas garantem que todas as fases ocorram de maneira coordenada e dentro das normas estabelecidas.
-            </div>
-            <div class="section-header">Tecnologia e segurança</div>
-            <div class="text-block">
-       A tecnologia desempenha um papel central no processo eleitoral brasileiro. As urnas eletrônicas passam por testes rigorosos antes de serem utilizadas, com o objetivo de garantir seu funcionamento adequado e a segurança dos dados.
-
-Entre essas etapas, destacam-se os testes públicos de segurança dos sistemas eleitorais, realizados meses antes da eleição. Esses testes permitem que especialistas analisem possíveis falhas e contribuam para o aprimoramento da segurança do sistema, aumentando a transparência e a confiabilidade do processo.
-
-Além disso, existem mecanismos de auditoria e verificação que permitem acompanhar o funcionamento do sistema e assegurar a confiabilidade dos resultados. Esses procedimentos são realizados por equipes técnicas e também podem contar com a participação de instituições fiscalizadoras.
-A segurança da informação é tratada como prioridade, envolvendo diferentes camadas de proteção para evitar interferências no processo.
-            </div>
-            <div class="section-header">Participação e fiscalização</div>
-            <div class="text-block">
-O calendário eleitoral também prevê a participação de entidades fiscalizadoras, que podem acompanhar o desenvolvimento dos sistemas eleitorais desde as fases iniciais, contribuindo para a transparência e a credibilidade das eleições.
-      </div>
-
-        </div>
-        <div class="right-col">
-            <img src="midia/fotos/imagem1.jfif" alt="Urna" class="side-image">
-        </div>
+    <div class="header-center">
+        <h1 class="main-title">POR DENTRO DAS ELEIÇÕES: FUNCIONAMENTO E BASTIDORES DO PROCESSO ELEITORAL</h1>
+        <p class="subtitle">Muito antes do dia da votação, um sistema complexo de organização, tecnologia e fiscalização estrutura o processo eleitoral no Brasil.</p>
     </div>
 
-    <div class="carousel-title">VÍDEOS RELACIONADOS</div>
+    <div class="video-box">
+        <iframe src="https://drive.google.com/file/d/1GwwqaLALCioTNSv6Y511qiLCfJ8sXDlk/preview" allow="autoplay" allowfullscreen></iframe>
+    </div>
     
-    <div class="reels-carousel-container">
-        <div class="reels-wrapper">
-            <div class="reel-item"><iframe src="https://drive.google.com/file/d/1vj_fVozf56IX4zvyZhcewMG2cyiQSk7I/preview"></iframe></div>
-            <div class="reel-item"><iframe src="https://drive.google.com/file/d/15fS4VQDg_y1xvb4NeRdi_c8qu3-61b7I/preview"></iframe></div>
-            <div class="reel-item"><iframe src="https://drive.google.com/file/d/19mVyhpR70wmtD9ehwxQGv8xFN9sl6f_a/preview"></iframe></div>
-            <div class="reel-item"><iframe src="https://drive.google.com/file/d/1J0T4_JOMnqJXcuTilPRSMe8bf37n3Y8n/preview"></iframe></div>
-            <div class="reel-item"><iframe src="https://drive.google.com/file/d/1mN49L0ZVz47eIjnMJgbX0XNu-bhNn7aS/preview"></iframe></div>
-        </div>
-    </div>
-</div>
+   <div class="content-body">
+        <p class="intro-text">
+            As eleições são uma das principais formas de exercício da democracia, permitindo que a população escolha seus representantes por meio do voto. Apesar de sua importância, o processo eleitoral que antecede os dias de votação ainda não é amplamente conhecido, permanecendo distante da maioria dos eleitores, que têm contato direto apenas com o momento de votar.
+        </p>
 
-<div class="extra-content">
-    <div class="inner-extra">
-        <div class="side-by-side">
-            <img src="midia/fotos/imagem3.jfif" alt="Produção">
-            <div class="text">
-                <div class="section-header">Conclusão</div>
-                Embora o momento da votação seja o mais visível para a população, ele representa apenas uma etapa de um processo amplo e contínuo. A preparação das eleições envolve planejamento, tecnologia, logística e o trabalho de diversas pessoas.
-Compreender esses bastidores é fundamental para reconhecer a complexidade do sistema eleitoral e a importância de cada etapa para garantir que o direito ao voto seja exercido de forma segura e organizada.
+        <div class="section">
+            <div class="section-header-container">
+                <span class="section-header-text">O PROCESSO ELEITORAL</span>
+            </div>
+            <div class="section-content">
+                O processo eleitoral não começa nem termina no dia da votação. A preparação para uma eleição pode ter início logo após o encerramento do pleito anterior, funcionando como um ciclo contínuo de organização que pode se estender por aproximadamente dois anos até a próxima eleição.
+                Esse funcionamento contínuo é reforçado pelo calendário oficial estabelecido pelo Tribunal Superior Eleitoral. Nas eleições de 2026, por exemplo, algumas etapas começaram ainda em outubro de 2025, como a liberação do acesso antecipado aos sistemas eleitorais para entidades fiscalizadoras. De acordo com a resolução que define o calendário eleitoral, as atividades se iniciam cerca de um ano antes do primeiro turno, incluindo fases de planejamento, testes e fiscalização dos sistemas.
+                Além da dimensão técnica, o calendário também organiza etapas fundamentais da disputa política. Em 2026, a janela de migração partidária ocorreu entre março e abril, período em que parlamentares puderam trocar de partido para concorrer às eleições. O prazo para filiação partidária e definição de domicílio eleitoral foi fixado em 4 de abril, seis meses antes do primeiro turno. Esse conjunto de etapas evidencia que o processo eleitoral envolve dimensões técnicas, logísticas e políticas que se desenvolvem ao longo do tempo.
             </div>
         </div>
+
+        <div class="section">
+            <div class="section-header-container">
+                <span class="section-header-text">COMO FUNCIONAM AS ELEIÇÕES</span>
+            </div>
+            <div class="section-content">
+                O processo eleitoral envolve uma série de etapas que vão desde a emissão do título de eleitor até a votação e a apuração dos resultados. Embora o eleitor tenha contato direto apenas com o momento da votação, existe uma estrutura anterior complexa que garante o funcionamento do sistema.
+                Uma das principais partes desse processo é a urna eletrônica, utilizada para registrar e contabilizar os votos de forma digital. Além da parte visível ao eleitor, há toda uma estrutura de bastidores que envolve organização, preparação técnica e testes dos sistemas utilizados. 
+                Essa dimensão, ainda pouco conhecida pelo público, é fundamental para que as eleições ocorram de forma organizada e dentro dos parâmetros estabelecidos.
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header-container">
+                <span class="section-header-text">TREINAMENTO DE EQUIPES</span>
+            </div>
+            <div class="section-content">
+                Outra parte importante dos bastidores das eleições é o treinamento das pessoas envolvidas diretamente na votação. Mesários, técnicos e demais colaboradores passam por orientações específicas para desempenhar suas funções de forma adequada no dia da eleição.
+                Os mesários são responsáveis por organizar a seção eleitoral, conferir os documentos dos eleitores e garantir o correto andamento da votação. Já as equipes técnicas atuam na instalação, manutenção e eventual substituição das urnas eletrônicas, além de prestar suporte durante o processo. Esse preparo contribui para reduzir falhas e assegurar um atendimento mais eficiente ao eleitor.
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header-container">
+                <span class="section-header-text">ORGANIZAÇÃO E LOGÍSTICA</span>
+            </div>
+            <div class="section-content">
+                Para que as eleições aconteçam em todo o território nacional, é necessária uma operação logística de grande escala, que exige planejamento detalhado para garantir que urnas eletrônicas, equipamentos e equipes cheguem a todos os locais de votação, incluindo regiões de difícil acesso.
+                Esse processo envolve o transporte seguro das urnas, a definição dos locais de votação e a organização das seções eleitorais. Em muitos casos, a distribuição dos equipamentos precisa ser feita com antecedência e acompanhada por equipes responsáveis por garantir a integridade do material. Além disso, há um trabalho contínuo de organização interna, que inclui cronogramas, divisão de tarefas e acompanhamento de cada etapa do processo eleitoral.
+                Além dos aspectos operacionais, o calendário também prevê campanhas institucionais de orientação ao eleitor. A partir de abril de 2026, o Tribunal Superior Eleitoral passou a veicular conteúdos informativos em rádio e televisão com o objetivo de explicar regras e incentivar a participação política.
+                O calendário eleitoral também define prazos específicos para diversas etapas. Entre eles, estão as datas para regularização do título de eleitor, com prazo final em 6 de maio de 2026 para alistamento, transferência ou revisão eleitoral, além da suspensão desses serviços a partir do dia seguinte. Essas datas contribuem para que todas as fases ocorram de maneira coordenada e dentro das normas estabelecidas.
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header-container">
+                <span class="section-header-text">TECNOLOGIA E SEGURANÇA</span>
+            </div>
+            <div class="section-content">
+                A tecnologia desempenha um papel central no processo eleitoral brasileiro. As urnas eletrônicas passam por testes rigorosos antes de serem utilizadas. Em 2025 o Teste Público de Segurança dos Sistemas Eleitorais foi realizado entre os dias 1º e 5 de dezembro, permitindo que especialistas identifiquem possíveis falhas e proponham melhorias. Após essa etapa, o calendário prevê testes de confirmação das correções, realizados em maio de 2026.
+                Além desses testes, existem mecanismos de auditoria e verificação que permitem acompanhar o funcionamento do sistema e assegurar a confiabilidade dos resultados. Esses procedimentos são conduzidos por equipes técnicas e podem contar com a participação de instituições fiscalizadoras. A segurança da informação é tratada como prioridade, envolvendo diferentes camadas de proteção voltadas à integridade do processo eleitoral.
+                O calendário eleitoral também prevê a participação de entidades fiscalizadoras, que têm acesso antecipado aos sistemas eleitorais desde cerca de um ano antes do pleito. Esse acompanhamento permite a realização de auditorias e contribui para a transparência e a credibilidade das eleições.
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header-container">
+                <span class="section-header-text">UM PROCESSO QUE VAI ALÉM DAS URNAS</span>
+            </div>
+            <div class="section-content">
+                Embora o momento da votação seja o mais visível para a população, ele representa apenas uma etapa de um processo amplo e contínuo. A preparação das eleições envolve planejamento, tecnologia, logística e o trabalho coordenado de diversas pessoas ao longo de meses.
+                Compreender esses bastidores é fundamental para reconhecer a complexidade do sistema eleitoral e a importância de cada etapa para garantir que o direito ao voto seja exercido de forma segura e organizada.
+            </div>
+        </div>
+        
     </div>
 </div>
 
 <footer></footer>
+
+<script>
+    const btn = document.getElementById('menu-btn');
+    const menu = document.getElementById('nav-menu');
+    const overlay = document.getElementById('overlay');
+
+    function toggleMenu() {
+        btn.classList.toggle('open');
+        menu.classList.toggle('active');
+        overlay.classList.toggle('active');
+        
+        if(menu.classList.contains('active')) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    }
+
+    btn.addEventListener('click', toggleMenu);
+    overlay.addEventListener('click', toggleMenu);
+
+    document.querySelectorAll('.contact-button').forEach(link => {
+        link.addEventListener('click', () => {
+            if(menu.classList.contains('active')) toggleMenu();
+        });
+    });
+</script>
 
 </body>
 </html>
