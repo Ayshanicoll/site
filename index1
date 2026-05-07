@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Por Dentro Das Eleições</title>
+    <style>
+        :root {
+            --green-theme: #006b33; 
+            --text-color: #333;
+            --light-gray: #ddd;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            line-height: 1.6;
+            background-color: #fff;
+        }
+
+        /* --- CABEÇALHO FIXO --- */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: var(--green-theme);
+            height: 60px;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .logo-container {
+            height: 45px;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-container img {
+            height: 100%;
+            width: auto;
+        }
+
+        .header-info {
+            margin-left: auto;
+            display: flex;
+            gap: 15px;
+        }
+
+        /* --- BOTÕES PARA PAGINAS --- */
+        .contact-button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            font-size: 10px;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 20px;
+            transition: background 0.3s;
+        }
+
+        .contact-button:hover {
+            background: rgba(255, 255, 255, 0.15); /* Efeito de brilho ao passar o mouse */
+        }
+
+        .icon-circle {
+            width: 18px;
+            height: 18px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* --- CONTEÚDO PRINCIPAL --- */
+        .container {
+            max-width: 900px; 
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header-center {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .main-title {
+            font-size: 2.2rem;
+            color: var(--green-theme);
+            margin: 0;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #666;
+            font-style: italic;
+            margin: 10px 0;
+        }
+
+        .content-body {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .intro-text {
+            text-align: justify;
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+        }
+
+        .video-box {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background-color: #000;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .video-box iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* --- SEÇÕES COM TRAÇO LATERAL --- */
+        .section {
+            margin-bottom: 35px;
+        }
+
+        .section-header-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .section-header-text {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: var(--green-theme);
+            text-transform: uppercase;
+            padding-right: 15px;
+            white-space: nowrap;
+        }
+
+        .section-header-container::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--light-gray);
+        }
+
+        .section-content {
+            font-size: 0.95rem;
+            text-align: justify;
+        }
+
+        footer {
+            background-color: var(--green-theme);
+            height: 50px;
+            margin-top: 50px;
+        }
+
+        @media (max-width: 768px) {
+            .header-info { display: none; }
+            .main-title { font-size: 1.6rem; }
+            .content-body { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo-container">
+        <img src="download.png" alt="Logo UEL">
+    </div>
+    <div class="header-info">
+        <a href="#" class="contact-button">
+            CONTATO 
+            <div class="icon-circle">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="var(--green-theme)"><path d="M20 15.5c-1.2 0-2.4-.2-3.6-.6-.3-.1-.7 0-1 .2l-2.2 2.2c-2.8-1.4-5.1-3.8-6.6-6.6l2.2-2.2c.3-.3.4-.7.2-1-.3-1.1-.5-2.3-.5-3.5 0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1 0 9.4 7.6 17 17 17 .6 0 1-.4 1-1v-3.5c0-.6-.4-1-1-1z"/></svg>
+            </div>
+        </a>
+        <a href="#" class="contact-button">
+            CONTATO 
+            <div class="icon-circle">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="var(--green-theme)"><path d="M20 15.5c-1.2 0-2.4-.2-3.6-.6-.3-.1-.7 0-1 .2l-2.2 2.2c-2.8-1.4-5.1-3.8-6.6-6.6l2.2-2.2c.3-.3.4-.7.2-1-.3-1.1-.5-2.3-.5-3.5 0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1 0 9.4 7.6 17 17 17 .6 0 1-.4 1-1v-3.5c0-.6-.4-1-1-1z"/></svg>
+            </div>
+        </a>
+        <a href="#" class="contact-button">
+            CONTATO 
+            <div class="icon-circle">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="var(--green-theme)"><path d="M20 15.5c-1.2 0-2.4-.2-3.6-.6-.3-.1-.7 0-1 .2l-2.2 2.2c-2.8-1.4-5.1-3.8-6.6-6.6l2.2-2.2c.3-.3.4-.7.2-1-.3-1.1-.5-2.3-.5-3.5 0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1 0 9.4 7.6 17 17 17 .6 0 1-.4 1-1v-3.5c0-.6-.4-1-1-1z"/></svg>
+            </div>
+        </a>
+    </div>
+</header>
+
+<div class="container">
+    <div class="header-center">
+        <h1 class="main-title">POR DENTRO DAS ELEIÇÕES</h1>
+        <p class="subtitle">O funcionamento e os bastidores do processo eleitoral brasileiro</p>
+    </div>
+
+    <div class="content-body">
+        <p class="intro-text">
+            As eleições são uma das principais formas de exercício da democracia, permitindo que a população escolha seus representantes por meio do voto. Apesar de sua importância, o processo eleitoral que antecede os dias de votação ainda não é amplamente conhecido, permanecendo distante da maioria dos eleitores.
+        </p>
+
+        <div class="video-box">
+            <iframe src="https://drive.google.com/file/d/1vj_fVozf56IX4zvyZhcewMG2cyiQSk7I/preview" allow="autoplay"></iframe>
+        </div>
+
+        <div class="section">
+            <div class="section-header-container">
+                <span class="section-header-text">O PROCESSO ELEITORAL</span>
+            </div>
+            <div class="section-content">
+                As eleições permitem que a população escolha seus representantes por meio do voto consciente. O processo eleitoral que antecede os dias de votação é fundamental para a manutenção da nossa democracia e transparência.
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header-container">
+                <span class="section-header-text">SEGURANÇA E TRANSPARÊNCIA</span>
+            </div>
+            <div class="section-content">
+                O sistema eletrônico de votação brasileiro é referência mundial em tecnologia. Cada etapa é auditável, garantindo que a vontade do eleitor seja respeitada e processada com total segurança e agilidade.
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer></footer>
+
+</body>
+</html>
