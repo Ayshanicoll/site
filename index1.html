@@ -227,6 +227,51 @@
 
             .main-title { font-size: 1.6rem; }
         }
+
+        .container {
+    display: flex; /* Cria as colunas */
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.sidebar {
+    flex: 1; /* A enquete ocupa 1 parte */
+    max-width: 300px; /* Define uma largura máxima para a coluna da enquete */
+}
+
+.content-wrapper {
+    flex: 3; /* O conteúdo ocupa 3 partes */
+}
+
+.enquete-box {
+    background: #f8f8f8;
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid #ddd;
+    text-align: center;
+    position: sticky; /* Faz a enquete ficar fixa ao rolar a página */
+    top: 80px;
+}
+
+.option {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 12px;
+    border: none;
+    border-radius: 20px;
+    background: #e0e0e0;
+    cursor: pointer;
+}
+
+/* Responsividade: no celular, empilha os itens */
+@media (max-width: 768px) {
+    .container { flex-direction: column; }
+    .sidebar { max-width: 100%; }
+}
+        
     </style>
 </head>
 <body>
@@ -279,14 +324,24 @@
 </header>
 
 <div class="container">
-    <div class="header-center">
+    <aside class="sidebar">
+        <div class="enquete-box">
+            <h3>VOCÊ TEM ALGUMA DÚVIDA SOBRE O NOSSO PRODUTO?</h3>
+            <button class="option" onclick="alert('Obrigado pelo seu feedback!')">Tenho algumas...</button>
+            <button class="option" onclick="alert('Que bom que entendeu tudo! 😉')">Entendo tudo 😍</button>
+        </div>
+    </aside>
+
+    <main class="content-wrapper">
         <h1 class="main-title">POR DENTRO DAS ELEIÇÕES: FUNCIONAMENTO E BASTIDORES DO PROCESSO ELEITORAL</h1>
         <p class="subtitle">Muito antes do dia da votação, um sistema complexo de organização, tecnologia e fiscalização estrutura o processo eleitoral no Brasil.</p>
-    </div>
-
-    <div class="video-box">
-        <iframe src="https://drive.google.com/file/d/1GwwqaLALCioTNSv6Y511qiLCfJ8sXDlk/preview" allow="autoplay" allowfullscreen></iframe>
-    </div>
+        
+        <div class="video-box">
+             <iframe src="https://drive.google.com/file/d/1GwwqaLALCioTNSv6Y511qiLCfJ8sXDlk/preview" allow="autoplay" allowfullscreen></iframe>
+        </div>
+        
+        </main>
+</div>
     
    <div class="content-body">
         <p class="intro-text">
