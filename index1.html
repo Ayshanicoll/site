@@ -1,138 +1,397 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enquete Rápida</title>
+    <title>Por Dentro Das Eleições</title>
+    <link rel="icon" type="image/png" href="midia/fotos/logouel2.png">
     <style>
-        /* CSS: Estilizando a página para ficar moderna e centralizada */
+        :root {
+            --green-theme: #006b33; 
+            --green-dark: #004d25;
+            --text-color: #333;
+            --light-gray: #ddd;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            font-family: 'Arial', sans-serif;
             margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            line-height: 1.6;
+            background-color: #fff;
+            overflow-x: hidden;
         }
 
-        .poll-card {
-            background-color: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
-        }
-
-        h1 {
-            color: #333;
-            font-size: 24px;
-            margin-bottom: 30px;
-        }
-
-        .options-container {
+        /* --- CABEÇALHO --- */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: var(--green-theme);
+            height: 65px;
             display: flex;
-            gap: 20px;
-            justify-content: center;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
-        .btn-vote {
-            background-color: #007bff;
+        .logo-container {
+            height: 45px;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-container img {
+            height: 100%;
+            width: auto;
+        }
+
+        /* --- NAVEGAÇÃO DESKTOP --- */
+        .header-info {
+            display: flex;
+            gap: 10px;
+        }
+
+        .contact-button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
             color: white;
+            font-size: 11px;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .icon-circle {
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* --- MENU HAMBÚRGUER --- */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+            background: transparent;
             border: none;
-            padding: 12px 30px;
-            font-size: 18px;
-            border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.1s;
-            flex: 1;
+            padding: 0;
+            z-index: 1100;
         }
 
-        .btn-vote:hover:not(:disabled) {
-            background-color: #0056b3;
-            transform: translateY(-2px);
+        .menu-toggle span {
+            width: 30px;
+            height: 3px;
+            background: white;
+            border-radius: 10px;
+            transition: all 0.3s linear;
+            position: relative;
+            transform-origin: 1px;
         }
 
-        .btn-vote:active:not(:disabled) {
-            transform: translateY(0);
+        .menu-toggle.open span:nth-child(1) { transform: rotate(45deg); }
+        .menu-toggle.open span:nth-child(2) { opacity: 0; transform: translateX(20px); }
+        .menu-toggle.open span:nth-child(3) { transform: rotate(-45deg); }
+
+        /* --- OVERLAY --- */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1050;
         }
 
-        /* Estilo para quando o botão for desativado (já votou) */
-        .btn-vote:disabled {
-            background-color: #cccccc;
-            cursor: not-allowed;
-            color: #666;
-        }
+        .overlay.active { display: block; }
 
-        .message {
-            margin-top: 25px;
-            font-size: 16px;
-            color: #28a745;
+        /* --- CONTEÚDO --- */
+        .container {
+            max-width: 900px; 
+            margin: 0 auto;
+            padding: 40px 20px;
+            text-align: left;
+        }
+.section-content {
+    text-align: justify;
+}
+        .main-title {
+            font-size: 2.2rem;
+            color: var(--green-theme);
+            text-transform: uppercase;
             font-weight: bold;
-            display: none; /* Escondido por padrão */
+            margin-bottom: 10px;
         }
 
-        .error {
-            color: #dc3545;
+        .subtitle {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        /* --- CORREÇÃO DO VÍDEO --- */
+        .video-box {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background-color: #000;
+            margin: 30px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative; /* Necessário para o iframe absoluto */
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .video-box iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .section-header-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            margin-top: 30px;
+        }
+
+        .section-header-text {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: var(--green-theme);
+            text-transform: uppercase;
+            padding-right: 15px;
+        }
+
+        .section-header-container::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--light-gray);
+        }
+
+        footer {
+            background-color: var(--green-theme);
+            height: 50px;
+            margin-top: 50px;
+        }
+
+        /* --- RESPONSIVIDADE MOBILE --- */
+        @media (max-width: 768px) {
+            .menu-toggle { display: flex; }
+
+            .header-info {
+                position: fixed;
+                right: -100%;
+                top: 0;
+                height: 100vh;
+                width: 260px;
+                background-color: var(--green-dark);
+                flex-direction: column;
+                padding: 80px 20px;
+                transition: right 0.4s ease-in-out;
+                z-index: 1060;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+            }
+
+            .header-info.active {
+                right: 0;
+            }
+
+            .contact-button {
+                font-size: 14px;
+                padding: 15px;
+                width: 100%;
+                border-radius: 8px;
+                background: rgba(255, 255, 255, 0.05);
+                margin-bottom: 10px;
+            }
+
+            .main-title { font-size: 1.6rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="poll-card">
-        <h1>Você está bem?</h1>
-        
-        <div class="options-container" id="opcoes">
-            <button class="btn-vote" data-resposta="sim">Sim</button>
-            <button class="btn-vote" data-resposta="nao">Não</button>
-        </div>
+<div class="overlay" id="overlay"></div>
 
-        <div id="mensagem" class="message"></div>
+<header>
+    <div class="logo-container">
+       <img src="midia/fotos/logouel.png" alt="Logo UEL">
     </div>
 
-    <script>
-        // JavaScript: A lógica e a "inteligência" do Front-end
-        document.addEventListener('DOMContentLoaded', () => {
-            const botoes = document.querySelectorAll('.btn-vote');
-            const areaMensagem = document.getElementById('mensagem');
+    <button class="menu-toggle" id="menu-btn">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
 
-            // 1. Verifica se o usuário já votou olhando o localStorage do navegador
-            if (localStorage.getItem('voto_registrado')) {
-                bloquearEnquete("Você já votou nesta enquete. Obrigado!");
-            }
+    <nav class="header-info" id="nav-menu">
+        <a href="#" class="contact-button">
+            INÍCIO 
+            <div class="icon-circle">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="var(--green-theme)"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            </div>
+        </a>
+        <a href="#" class="contact-button">
+            VÍDEOS 
+            <div class="icon-circle">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="var(--green-theme)"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+        </a>
+        <a href="#" class="contact-button">
+             PODCASTS
+            <div class="icon-circle">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="var(--green-theme)"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zM17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
+            </div>
+        </a>
+        <a href="#" class="contact-button">
+             EQUIPE
+            <div class="icon-circle">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="var(--green-theme)"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+            </div>
+        </a>
+         <a href="#" class="contact-button">
+            CONTATO 
+            <div class="icon-circle">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="var(--green-theme)"><path d="M20 15.5c-1.2 0-2.4-.2-3.6-.6-.3-.1-.7 0-1 .2l-2.2 2.2c-2.8-1.4-5.1-3.8-6.6-6.6l2.2-2.2c.3-.3.4-.7.2-1-.3-1.1-.5-2.3-.5-3.5 0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1 0 9.4 7.6 17 17 17 .6 0 1-.4 1-1v-3.5c0-.6-.4-1-1-1z"/></svg>
+            </div>
+        </a>
+    </nav>
+</header>
 
-            // 2. Adiciona a ação de clique nos botões
-            botoes.forEach(botao => {
-                botao.addEventListener('click', async (evento) => {
-                    // Pega a resposta escolhida (sim ou nao) do botão clicado
-                    const respostaEscolhida = evento.target.getAttribute('data-resposta');
+<div class="container">
+    <div class="header-center">
+        <h1 class="main-title">POR DENTRO DAS ELEIÇÕES: FUNCIONAMENTO E BASTIDORES DO PROCESSO ELEITORAL</h1>
+        <p class="subtitle">Muito antes do dia da votação, um sistema complexo de organização, tecnologia e fiscalização estrutura o processo eleitoral no Brasil.</p>
+    </div>
 
-                    // ==========================================
-                    // AQUI ENTRARÁ A COMUNICAÇÃO COM O BACK-END
-                    // Quando o back-end estiver pronto, vamos usar a função fetch() 
-                    // para enviar a "respostaEscolhida" para o servidor.
-                    // ==========================================
+    <div class="video-box">
+        <iframe src="https://drive.google.com/file/d/1GwwqaLALCioTNSv6Y511qiLCfJ8sXDlk/preview" allow="autoplay" allowfullscreen></iframe>
+    </div>
+    
+   <div class="content-body">
+        <p class="intro-text">
+            As eleições são uma das principais formas de exercício da democracia, permitindo que a população escolha seus representantes por meio do voto. Apesar de sua importância, o processo eleitoral que antecede os dias de votação ainda não é amplamente conhecido, permanecendo distante da maioria dos eleitores, que têm contato direto apenas com o momento de votar.
+        </p>
 
-                    // Por enquanto, vamos simular que deu tudo certo:
-                    
-                    // 3. Salva no computador da pessoa que ela já votou
-                    localStorage.setItem('voto_registrado', 'true');
-                    
-                    // 4. Mostra a mensagem de sucesso e bloqueia os botões
-                    bloquearEnquete(`Voto "${respostaEscolhida.toUpperCase()}" computado com sucesso!`);
-                });
-            });
+        <div class="section">
+            <div class="section-header-container">
+                <span class="section-header-text">O PROCESSO ELEITORAL</span>
+            </div>
+            <div class="section-content">
+                O processo eleitoral não começa nem termina no dia da votação. A preparação para uma eleição pode ter início logo após o encerramento do pleito anterior, funcionando como um ciclo contínuo de organização que pode se estender por aproximadamente dois anos até a próxima eleição.
+                Esse funcionamento contínuo é reforçado pelo calendário oficial estabelecido pelo Tribunal Superior Eleitoral. Nas eleições de 2026, por exemplo, algumas etapas começaram ainda em outubro de 2025, como a liberação do acesso antecipado aos sistemas eleitorais para entidades fiscalizadoras. De acordo com a resolução que define o calendário eleitoral, as atividades se iniciam cerca de um ano antes do primeiro turno, incluindo fases de planejamento, testes e fiscalização dos sistemas.
+                Além da dimensão técnica, o calendário também organiza etapas fundamentais da disputa política. Em 2026, a janela de migração partidária ocorreu entre março e abril, período em que parlamentares puderam trocar de partido para concorrer às eleições. O prazo para filiação partidária e definição de domicílio eleitoral foi fixado em 4 de abril, seis meses antes do primeiro turno. Esse conjunto de etapas evidencia que o processo eleitoral envolve dimensões técnicas, logísticas e políticas que se desenvolvem ao longo do tempo.
+            </div>
+        </div>
 
-            // Função para desativar a enquete
-            function bloquearEnquete(mensagemTexto) {
-                botoes.forEach(b => b.disabled = true);
-                areaMensagem.textContent = mensagemTexto;
-                areaMensagem.style.display = 'block'; // Mostra a mensagem
-            }
+        <div class="section">
+            <div class="section-header-container">
+                <span class="section-header-text">COMO FUNCIONAM AS ELEIÇÕES</span>
+            </div>
+            <div class="section-content">
+                O processo eleitoral envolve uma série de etapas que vão desde a emissão do título de eleitor até a votação e a apuração dos resultados. Embora o eleitor tenha contato direto apenas com o momento da votação, existe uma estrutura anterior complexa que garante o funcionamento do sistema.
+                Uma das principais partes desse processo é a urna eletrônica, utilizada para registrar e contabilizar os votos de forma digital. Além da parte visível ao eleitor, há toda uma estrutura de bastidores que envolve organização, preparação técnica e testes dos sistemas utilizados. 
+                Essa dimensão, ainda pouco conhecida pelo público, é fundamental para que as eleições ocorram de forma organizada e dentro dos parâmetros estabelecidos.
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header-container">
+                <span class="section-header-text">TREINAMENTO DE EQUIPES</span>
+            </div>
+            <div class="section-content">
+                Outra parte importante dos bastidores das eleições é o treinamento das pessoas envolvidas diretamente na votação. Mesários, técnicos e demais colaboradores passam por orientações específicas para desempenhar suas funções de forma adequada no dia da eleição.
+                Os mesários são responsáveis por organizar a seção eleitoral, conferir os documentos dos eleitores e garantir o correto andamento da votação. Já as equipes técnicas atuam na instalação, manutenção e eventual substituição das urnas eletrônicas, além de prestar suporte durante o processo. Esse preparo contribui para reduzir falhas e assegurar um atendimento mais eficiente ao eleitor.
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header-container">
+                <span class="section-header-text">ORGANIZAÇÃO E LOGÍSTICA</span>
+            </div>
+            <div class="section-content">
+                Para que as eleições aconteçam em todo o território nacional, é necessária uma operação logística de grande escala, que exige planejamento detalhado para garantir que urnas eletrônicas, equipamentos e equipes cheguem a todos os locais de votação, incluindo regiões de difícil acesso.
+                Esse processo envolve o transporte seguro das urnas, a definição dos locais de votação e a organização das seções eleitorais. Em muitos casos, a distribuição dos equipamentos precisa ser feita com antecedência e acompanhada por equipes responsáveis por garantir a integridade do material. Além disso, há um trabalho contínuo de organização interna, que inclui cronogramas, divisão de tarefas e acompanhamento de cada etapa do processo eleitoral.
+                Além dos aspectos operacionais, o calendário também prevê campanhas institucionais de orientação ao eleitor. A partir de abril de 2026, o Tribunal Superior Eleitoral passou a veicular conteúdos informativos em rádio e televisão com o objetivo de explicar regras e incentivar a participação política.
+                O calendário eleitoral também define prazos específicos para diversas etapas. Entre eles, estão as datas para regularização do título de eleitor, com prazo final em 6 de maio de 2026 para alistamento, transferência ou revisão eleitoral, além da suspensão desses serviços a partir do dia seguinte. Essas datas contribuem para que todas as fases ocorram de maneira coordenada e dentro das normas estabelecidas.
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header-container">
+                <span class="section-header-text">TECNOLOGIA E SEGURANÇA</span>
+            </div>
+            <div class="section-content">
+                A tecnologia desempenha um papel central no processo eleitoral brasileiro. As urnas eletrônicas passam por testes rigorosos antes de serem utilizadas. Em 2025 o Teste Público de Segurança dos Sistemas Eleitorais foi realizado entre os dias 1º e 5 de dezembro, permitindo que especialistas identifiquem possíveis falhas e proponham melhorias. Após essa etapa, o calendário prevê testes de confirmação das correções, realizados em maio de 2026.
+                Além desses testes, existem mecanismos de auditoria e verificação que permitem acompanhar o funcionamento do sistema e assegurar a confiabilidade dos resultados. Esses procedimentos são conduzidos por equipes técnicas e podem contar com a participação de instituições fiscalizadoras. A segurança da informação é tratada como prioridade, envolvendo diferentes camadas de proteção voltadas à integridade do processo eleitoral.
+                O calendário eleitoral também prevê a participação de entidades fiscalizadoras, que têm acesso antecipado aos sistemas eleitorais desde cerca de um ano antes do pleito. Esse acompanhamento permite a realização de auditorias e contribui para a transparência e a credibilidade das eleições.
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header-container">
+                <span class="section-header-text">UM PROCESSO QUE VAI ALÉM DAS URNAS</span>
+            </div>
+            <div class="section-content">
+                Embora o momento da votação seja o mais visível para a população, ele representa apenas uma etapa de um processo amplo e contínuo. A preparação das eleições envolve planejamento, tecnologia, logística e o trabalho coordenado de diversas pessoas ao longo de meses.
+                Compreender esses bastidores é fundamental para reconhecer a complexidade do sistema eleitoral e a importância de cada etapa para garantir que o direito ao voto seja exercido de forma segura e organizada.
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<footer></footer>
+
+<script>
+    const btn = document.getElementById('menu-btn');
+    const menu = document.getElementById('nav-menu');
+    const overlay = document.getElementById('overlay');
+
+    function toggleMenu() {
+        btn.classList.toggle('open');
+        menu.classList.toggle('active');
+        overlay.classList.toggle('active');
+        
+        if(menu.classList.contains('active')) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    }
+
+    btn.addEventListener('click', toggleMenu);
+    overlay.addEventListener('click', toggleMenu);
+
+    document.querySelectorAll('.contact-button').forEach(link => {
+        link.addEventListener('click', () => {
+            if(menu.classList.contains('active')) toggleMenu();
         });
-    </script>
+    });
+</script>
 
 </body>
 </html>
