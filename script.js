@@ -1,13 +1,13 @@
-// 1. Inicializa o cliente do Supabase (Apenas uma vez)
+// 1. Inicializa o cliente do Supabase
 const supabase = supabase.createClient(
     'https://ydvnkdfgqmxfnmylffka.supabase.co', 
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlkdm5rZGZncW14Zm5teWxmZmthIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkzMjEwMDYsImV4cCI6MjA5NDg5NzAwNn0.BeGtXfdZ990uSaAjel_01yg2HtX8boshUh50SDN64pw'
 );
 
-// 2. Função para registrar o voto (Global)
+// 2. Função de voto (fora de qualquer bloco)
 async function registrarVoto(perguntaId, escolha) {
     const divPergunta = document.getElementById('pergunta' + perguntaId);
-    if (!divPergunta) return; // Segurança caso o ID não exista
+    if (!divPergunta) return;
 
     const botoes = divPergunta.querySelectorAll('button');
     botoes.forEach(btn => btn.disabled = true);
@@ -17,15 +17,15 @@ async function registrarVoto(perguntaId, escolha) {
         .insert([{ pergunta_id: perguntaId, resposta: escolha }]);
 
     if (error) {
-        console.error("Erro ao votar:", error);
-        alert("Ops, algo deu errado. Tente novamente.");
+        console.error("Erro:", error);
+        alert("Erro ao votar. Tente novamente.");
         botoes.forEach(btn => btn.disabled = false);
     } else {
         divPergunta.innerHTML = '<p>Obrigado pelo seu voto!</p>';
     }
 }
 
-// 3. Gerenciamento do Menu (Apenas uma vez)
+// 3. Gerenciamento do Menu (apenas um bloco DOMContentLoaded)
 document.addEventListener('DOMContentLoaded', function() {
     const btn = document.getElementById('menu-btn');
     const menu = document.getElementById('nav-menu');
