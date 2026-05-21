@@ -35,10 +35,9 @@ document.addEventListener('DOMContentLoaded', function() {
 // 1. Inicializa o cliente do Supabase
 const supabase = supabase.createClient(
     'https://ydvnkdfgqmxfnmylffka.supabase.co',
-    'sb_publishable_Q4AG8syUmIOYS1irK-KOgg_OX6NbH_q'
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlkdm5rZGZncW14Zm5teWxmZmthIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkzMjEwMDYsImV4cCI6MjA5NDg5NzAwNn0.BeGtXfdZ990uSaAjel_01yg2HtX8boshUh50SDN64pw'
 );
 
-// 2. Função para registrar o voto
 async function registrarVoto(perguntaId, escolha) {
     // Desabilita os botões para evitar clique duplo
     const botoes = document.querySelectorAll('.btn-voto');
@@ -51,11 +50,12 @@ async function registrarVoto(perguntaId, escolha) {
     if (error) {
         console.error("Erro ao votar:", error);
         alert("Ops, algo deu errado. Tente novamente.");
-        // Reabilita os botões se houver erro para o usuário tentar de novo
+        // Reabilita os botões se houver erro
         botoes.forEach(btn => btn.disabled = false);
     } else {
-        // Altera o conteúdo do card para agradecer o voto
-        document.getElementById('enquete-section').innerHTML = '<h3>Obrigado pelo seu voto!</h3>';
+        // Seleciona apenas a div da pergunta que foi respondida, sem apagar as outras
+        const divPergunta = document.getElementById('pergunta' + perguntaId);
+        divPergunta.innerHTML = '<p>Obrigado pelo seu voto!</p>';
     }
 }
 
