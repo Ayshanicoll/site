@@ -82,6 +82,11 @@ header {
 }
 
 /* --- MENU HAMBÚRGUER --- */
+
+.menu-toggle {
+    pointer-events: auto;
+}
+
 .menu-toggle {
 display: none;
     flex-direction: column;
