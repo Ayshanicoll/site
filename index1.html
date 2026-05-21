@@ -23,7 +23,6 @@
             overflow-x: hidden;
         }
 
-        /* --- CABEÇALHO --- */
         header {
             position: sticky;
             top: 0;
@@ -48,7 +47,6 @@
             width: auto;
         }
 
-        /* --- NAVEGAÇÃO DESKTOP --- */
         .header-info {
             display: flex;
             gap: 10px;
@@ -82,7 +80,6 @@
             flex-shrink: 0;
         }
 
-        /* --- MENU HAMBÚRGUER --- */
         .menu-toggle {
             display: none;
             flex-direction: column;
@@ -110,7 +107,6 @@
         .menu-toggle.open span:nth-child(2) { opacity: 0; transform: translateX(20px); }
         .menu-toggle.open span:nth-child(3) { transform: rotate(-45deg); }
 
-        /* --- OVERLAY --- */
         .overlay {
             display: none;
             position: fixed;
@@ -124,7 +120,6 @@
 
         .overlay.active { display: block; }
 
-        /* --- CONTAINER PRINCIPAL (ESQUEMA DE COLUNAS) --- */
         .container {
             display: flex;
             gap: 30px;
@@ -141,10 +136,9 @@
 
         .content-wrapper {
             flex: 3;
-            min-width: 0; /* Evita overflow em telas menores */
+            min-width: 0;
         }
 
-        /* --- ENQUETE --- */
         .enquete-box {
             background: #f8f8f8;
             padding: 20px;
@@ -159,6 +153,7 @@
             margin-top: 0;
             font-size: 1rem;
             color: var(--green-theme);
+            margin-bottom: 15px;
         }
 
         .option {
@@ -171,14 +166,92 @@
             background: #e0e0e0;
             cursor: pointer;
             font-size: 14px;
-            transition: background 0.3s;
+            transition: all 0.3s;
         }
 
         .option:hover {
             background: #d0d0d0;
+            transform: scale(1.02);
         }
 
-        /* --- TÍTULOS E SUBTÍTULO --- */
+        .option:disabled {
+            background: #aaa;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .resultados-box {
+            display: none;
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        .resultados-box.mostrar {
+            display: block;
+        }
+
+        .resultado-item {
+            margin-bottom: 12px;
+        }
+
+        .resultado-label {
+            font-size: 13px;
+            margin-bottom: 4px;
+            display: block;
+            font-weight: 500;
+        }
+
+        .resultado-barra {
+            width: 100%;
+            height: 22px;
+            background: #e0e0e0;
+            border-radius: 11px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .resultado-porcentagem {
+            height: 100%;
+            background: var(--green-theme);
+            border-radius: 11px;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 8px;
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+            min-width: 35px;
+        }
+
+        .total-votos {
+            margin-top: 12px;
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+        }
+
+        .mensagem {
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            display: none;
+        }
+
+        .mensagem.sucesso {
+            background: #d4edda;
+            color: #155724;
+            display: block;
+        }
+
+        .mensagem.erro {
+            background: #f8d7da;
+            color: #721c24;
+            display: block;
+        }
+
         .main-title {
             font-size: 2.2rem;
             color: var(--green-theme);
@@ -194,7 +267,6 @@
             color: #555;
         }
 
-        /* --- VÍDEO --- */
         .video-box {
             width: 100%;
             aspect-ratio: 16 / 9;
@@ -215,7 +287,6 @@
             border: none;
         }
 
-        /* --- SEÇÕES DE TEXTO --- */
         .section-header-container {
             display: flex;
             align-items: center;
@@ -254,14 +325,12 @@
             margin-bottom: 25px;
         }
 
-        /* --- FOOTER --- */
         footer {
             background-color: var(--green-theme);
             height: 50px;
             margin-top: 50px;
         }
 
-        /* --- RESPONSIVIDADE MOBILE --- */
         @media (max-width: 768px) {
             .menu-toggle { display: flex; }
 
@@ -279,9 +348,7 @@
                 box-shadow: -5px 0 15px rgba(0,0,0,0.3);
             }
 
-            .header-info.active {
-                right: 0;
-            }
+            .header-info.active { right: 0; }
 
             .contact-button {
                 font-size: 14px;
@@ -294,19 +361,11 @@
 
             .main-title { font-size: 1.6rem; }
             
-            /* Empilha as colunas no mobile */
-            .container {
-                flex-direction: column;
-            }
+            .container { flex-direction: column; }
             
-            .sidebar {
-                max-width: 100%;
-                order: -1; /* Move a enquete para cima no mobile (opcional) */
-            }
+            .sidebar { max-width: 100%; order: -1; }
             
-            .enquete-box {
-                position: static;
-            }
+            .enquete-box { position: static; }
         }
     </style>
 </head>
@@ -363,8 +422,27 @@
     <aside class="sidebar">
         <div class="enquete-box">
             <h3>VOCÊ TEM ALGUMA DÚVIDA SOBRE O NOSSO PRODUTO?</h3>
-            <button class="option" onclick="alert('Obrigado pelo seu feedback!')">Tenho algumas...</button>
-            <button class="option" onclick="alert('Que bom que entendeu tudo! 😉')">Entendo tudo 😍</button>
+            
+            <div id="mensagem" class="mensagem"></div>
+            
+            <button class="option" id="btn-opcao1" onclick="votar('Tenho algumas...')">Tenho algumas...</button>
+            <button class="option" id="btn-opcao2" onclick="votar('Entendo tudo 😍')">Entendo tudo 😍</button>
+            
+            <div id="resultados" class="resultados-box">
+                <div class="resultado-item">
+                    <span class="resultado-label">Tenho algumas...</span>
+                    <div class="resultado-barra">
+                        <div class="resultado-porcentagem" id="porc-1">0%</div>
+                    </div>
+                </div>
+                <div class="resultado-item">
+                    <span class="resultado-label">Entendo tudo 😍</span>
+                    <div class="resultado-barra">
+                        <div class="resultado-porcentagem" id="porc-2">0%</div>
+                    </div>
+                </div>
+                <div class="total-votos" id="total-votos">Total: 0 votos</div>
+            </div>
         </div>
     </aside>
 
@@ -386,10 +464,29 @@
                     <span class="section-header-text">O PROCESSO ELEITORAL</span>
                 </div>
                 <div class="section-content">
-                    O processo eleitoral não começa nem termina no dia da votação. A preparação para uma eleição pode ter início logo após o encerramento do pleito anterior, funcionando como um ciclo contínuo de organização que pode se estender por aproximadamente dois anos até a próxima eleição.
-                    Esse funcionamento contínuo é reforçado pelo calendário oficial estabelecido pelo Tribunal Superior Eleitoral. Nas eleições de 2026, por exemplo, algumas etapas começaram ainda em outubro de 2025, como a liberação do acesso antecipado aos sistemas eleitorais para entidades fiscalizadoras. De acordo com a resolução que define o calendário eleitoral, as atividades se iniciam cerca de um ano antes do primeiro turno, incluindo fases de planejamento, testes e fiscalização dos sistemas.
-                    Além da dimensão técnica, o calendário também organiza etapas fundamentais da disputa política. Em 2026, a janela de migração partidária ocorreu entre março e abril, período em que parlamentares puderam trocar de partido para concorrer às eleições. O prazo para filiação partidária e definição de domicílio eleitoral foi fixado em 4 de abril, seis meses antes do primeiro turno. Esse conjunto de etapas evidencia
+                    O processo eleitoral não começa nem termina no dia da votação. A preparação para uma eleição pode ter início logo após o encerramento do ple
+                </div>
+            </div>
 
-                
+            <div class="section">
+                <div class="section-header-container">
+                    <span class="section-header-text">COMO FUNCIONAM AS ELEIÇÕES</span>
+                </div>
+                <div class="section-content">
+                    O processo eleitoral envolve uma série de etapas que vão desde a emissão do título de eleitor até a votação e a apuração dos resultados.
+                </div>
+            </div>
 
-            
+            <div class="section">
+                <div class="section-header-container">
+                    <span class="section-header-text">TREINAMENTO DE EQUIPES</span>
+                </div>
+                <div class="section-content">
+                    Outra parte importante dos bastidores das eleições é o treinamento das pessoas envolvidas diretamente na votação.
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-header-container">
+                    <span class="section-header-text">ORGANIZAÇÃO E LOGÍSTICA</span>
+                </div>
