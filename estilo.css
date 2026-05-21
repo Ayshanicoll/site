@@ -1,16 +1,8 @@
-/* --- VARIÁVEIS --- */
 :root {
     --green-theme: #006b33; 
     --green-dark: #004d25;
     --text-color: #333;
     --light-gray: #ddd;
-}
-
-/* --- RESET BÁSICO --- */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
 }
 
 body {
@@ -141,7 +133,7 @@ header {
     display: block;
 }
 
-/* --- CONTEÚDO PRINCIPAL --- */
+/* --- CONTEÚDO --- */
 .container {
     max-width: 900px; 
     margin: 0 auto;
@@ -276,7 +268,7 @@ footer {
     .main-title {
         font-size: 1.6rem;
     }
-    
+
     .section-content {
         text-align: left;
     }
