@@ -31,3 +31,24 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// 1. Inicializa o cliente do Supabase
+const supabase = supabase.createClient(
+    'https://ydvnkdfgqmxfnmylffka.supabase.co',
+    'sb_publishable_Q4AG8syUmIOYS1irK-KOgg_OX6NbH_q'
+);
+
+// 2. Função para registrar o voto
+async function registrarVoto(perguntaId, escolha) {
+    const { data, error } = await supabase
+        .from('votos')
+        .insert([{ pergunta_id: perguntaId, resposta: escolha }]);
+
+    if (error) {
+        console.error("Erro ao votar:", error);
+        alert("Ops, algo deu errado. Tente novamente.");
+    } else {
+        alert("Voto registrado com sucesso! Obrigado pela participação.");
+    }
+}
+
