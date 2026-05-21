@@ -5,369 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Por Dentro Das Eleições</title>
     <link rel="icon" type="image/png" href="midia/fotos/logouel2.png">
-    <style>
-        :root {
-            --green-theme: #006b33; 
-            --green-dark: #004d25;
-            --text-color: #333;
-            --light-gray: #ddd;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            color: var(--text-color);
-            line-height: 1.6;
-            background-color: #fff;
-            overflow-x: hidden;
-        }
-
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background-color: var(--green-theme);
-            height: 65px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 5%;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        .logo-container {
-            height: 45px;
-            display: flex;
-            align-items: center;
-        }
-
-        .logo-container img {
-            height: 100%;
-            width: auto;
-        }
-
-        .header-info {
-            display: flex;
-            gap: 10px;
-        }
-
-        .contact-button {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: white;
-            font-size: 11px;
-            text-transform: uppercase;
-            text-decoration: none;
-            padding: 8px 12px;
-            border-radius: 25px;
-            transition: all 0.3s ease;
-        }
-
-        .contact-button:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .icon-circle {
-            width: 22px;
-            height: 22px;
-            background: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            justify-content: space-around;
-            width: 30px;
-            height: 25px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 1100;
-        }
-
-        .menu-toggle span {
-            width: 30px;
-            height: 3px;
-            background: white;
-            border-radius: 10px;
-            transition: all 0.3s linear;
-            position: relative;
-            transform-origin: 1px;
-        }
-
-        .menu-toggle.open span:nth-child(1) { transform: rotate(45deg); }
-        .menu-toggle.open span:nth-child(2) { opacity: 0; transform: translateX(20px); }
-        .menu-toggle.open span:nth-child(3) { transform: rotate(-45deg); }
-
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1050;
-        }
-
-        .overlay.active { display: block; }
-
-        .container {
-            display: flex;
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        .sidebar {
-            flex: 1;
-            min-width: 250px;
-            max-width: 300px;
-        }
-
-        .content-wrapper {
-            flex: 3;
-            min-width: 0;
-        }
-
-        .enquete-box {
-            background: #f8f8f8;
-            padding: 20px;
-            border-radius: 15px;
-            border: 1px solid #ddd;
-            text-align: center;
-            position: sticky;
-            top: 80px;
-        }
-
-        .enquete-box h3 {
-            margin-top: 0;
-            font-size: 1rem;
-            color: var(--green-theme);
-            margin-bottom: 15px;
-        }
-
-        .option {
-            display: block;
-            width: 100%;
-            margin-bottom: 10px;
-            padding: 12px;
-            border: none;
-            border-radius: 20px;
-            background: #e0e0e0;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s;
-        }
-
-        .option:hover {
-            background: #d0d0d0;
-            transform: scale(1.02);
-        }
-
-        .option:disabled {
-            background: #aaa;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .resultados-box {
-            display: none;
-            margin-top: 15px;
-            text-align: left;
-        }
-
-        .resultados-box.mostrar {
-            display: block;
-        }
-
-        .resultado-item {
-            margin-bottom: 12px;
-        }
-
-        .resultado-label {
-            font-size: 13px;
-            margin-bottom: 4px;
-            display: block;
-            font-weight: 500;
-        }
-
-        .resultado-barra {
-            width: 100%;
-            height: 22px;
-            background: #e0e0e0;
-            border-radius: 11px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .resultado-porcentagem {
-            height: 100%;
-            background: var(--green-theme);
-            border-radius: 11px;
-            transition: width 0.5s ease;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding-right: 8px;
-            color: white;
-            font-size: 11px;
-            font-weight: bold;
-            min-width: 35px;
-        }
-
-        .total-votos {
-            margin-top: 12px;
-            font-size: 12px;
-            color: #666;
-            text-align: center;
-        }
-
-        .mensagem {
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            font-size: 13px;
-            display: none;
-        }
-
-        .mensagem.sucesso {
-            background: #d4edda;
-            color: #155724;
-            display: block;
-        }
-
-        .mensagem.erro {
-            background: #f8d7da;
-            color: #721c24;
-            display: block;
-        }
-
-        .main-title {
-            font-size: 2.2rem;
-            color: var(--green-theme);
-            text-transform: uppercase;
-            font-weight: bold;
-            margin-bottom: 10px;
-            line-height: 1.2;
-        }
-
-        .subtitle {
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-            color: #555;
-        }
-
-        .video-box {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            background-color: #000;
-            margin: 30px 0;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            position: relative;
-            overflow: hidden;
-            border-radius: 8px;
-        }
-
-        .video-box iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .section-header-container {
-            display: flex;
-            align-items: center;
-            margin-bottom: 12px;
-            margin-top: 30px;
-        }
-
-        .section-header-text {
-            font-size: 0.85rem;
-            font-weight: bold;
-            color: var(--green-theme);
-            text-transform: uppercase;
-            padding-right: 15px;
-            white-space: nowrap;
-        }
-
-        .section-header-container::after {
-            content: "";
-            flex: 1;
-            height: 1px;
-            background: var(--light-gray);
-            min-width: 50px;
-        }
-
-        .section-content {
-            text-align: justify;
-            color: #444;
-            font-size: 1rem;
-            line-height: 1.7;
-        }
-
-        .intro-text {
-            font-size: 1.05rem;
-            color: #444;
-            line-height: 1.7;
-            margin-bottom: 25px;
-        }
-
-        footer {
-            background-color: var(--green-theme);
-            height: 50px;
-            margin-top: 50px;
-        }
-
-        @media (max-width: 768px) {
-            .menu-toggle { display: flex; }
-
-            .header-info {
-                position: fixed;
-                right: -100%;
-                top: 0;
-                height: 100vh;
-                width: 260px;
-                background-color: var(--green-dark);
-                flex-direction: column;
-                padding: 80px 20px;
-                transition: right 0.4s ease-in-out;
-                z-index: 1060;
-                box-shadow: -5px 0 15px rgba(0,0,0,0.3);
-            }
-
-            .header-info.active { right: 0; }
-
-            .contact-button {
-                font-size: 14px;
-                padding: 15px;
-                width: 100%;
-                border-radius: 8px;
-                background: rgba(255, 255, 255, 0.05);
-                margin-bottom: 10px;
-            }
-
-            .main-title { font-size: 1.6rem; }
-            
-            .container { flex-direction: column; }
-            
-            .sidebar { max-width: 100%; order: -1; }
-            
-            .enquete-box { position: static; }
-        }
-    </style>
+    <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
 
@@ -398,7 +36,7 @@
             </div>
         </a>
         <a href="#" class="contact-button">
-             PODCASTS
+             PODQeeeee
             <div class="icon-circle">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="var(--green-theme)"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zM17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
             </div>
@@ -419,74 +57,51 @@
 </header>
 
 <div class="container">
-    <aside class="sidebar">
-        <div class="enquete-box">
-            <h3>VOCÊ TEM ALGUMA DÚVIDA SOBRE O NOSSO PRODUTO?</h3>
-            
-            <div id="mensagem" class="mensagem"></div>
-            
-            <button class="option" id="btn-opcao1" onclick="votar('Tenho algumas...')">Tenho algumas...</button>
-            <button class="option" id="btn-opcao2" onclick="votar('Entendo tudo 😍')">Entendo tudo 😍</button>
-            
-            <div id="resultados" class="resultados-box">
-                <div class="resultado-item">
-                    <span class="resultado-label">Tenho algumas...</span>
-                    <div class="resultado-barra">
-                        <div class="resultado-porcentagem" id="porc-1">0%</div>
-                    </div>
-                </div>
-                <div class="resultado-item">
-                    <span class="resultado-label">Entendo tudo 😍</span>
-                    <div class="resultado-barra">
-                        <div class="resultado-porcentagem" id="porc-2">0%</div>
-                    </div>
-                </div>
-                <div class="total-votos" id="total-votos">Total: 0 votos</div>
-            </div>
-        </div>
-    </aside>
-
-    <main class="content-wrapper">
+    <div class="header-center">
         <h1 class="main-title">POR DENTRO DAS ELEIÇÕES: FUNCIONAMENTO E BASTIDORES DO PROCESSO ELEITORAL</h1>
         <p class="subtitle">Muito antes do dia da votação, um sistema complexo de organização, tecnologia e fiscalização estrutura o processo eleitoral no Brasil.</p>
-        
-        <div class="video-box">
-             <iframe src="https://drive.google.com/file/d/1GwwqaLALCioTNSv6Y511qiLCfJ8sXDlk/preview" allow="autoplay" allowfullscreen></iframe>
-        </div>
+    </div>
+
+    <div class="video-box">
+        <iframe src="https://drive.google.com/file/d/1GwwqaLALCioTNSv6Y511qiLCfJ8sXDlk/preview" allow="autoplay" allowfullscreen></iframe>
+    </div>
     
-        <div class="content-body">
-            <p class="intro-text">
-                As eleições são uma das principais formas de exercício da democracia, permitindo que a população escolha seus representantes por meio do voto. Apesar de sua importância, o processo eleitoral que antecede os dias de votação ainda não é amplamente conhecido, permanecendo distante da maioria dos eleitores, que têm contato direto apenas com o momento de votar.
-            </p>
+   <div class="content-body">
+        <p class="intro-text">
+            As eleições são uma das principais formas de exercício da democracia, permitindo que a população escolha seus representantes por meio do voto. Apesar de sua importância, o processo eleitoral que antecede os dias de votação ainda não é amplamente conhecido, permanecendo distante da maioria dos eleitores, que têm contato direto apenas com o momento de votar.
+        </p>
 
-            <div class="section">
-                <div class="section-header-container">
-                    <span class="section-header-text">O PROCESSO ELEITORAL</span>
-                </div>
-                <div class="section-content">
-                    O processo eleitoral não começa nem termina no dia da votação. A preparação para uma eleição pode ter início logo após o encerramento do ple
-                </div>
+        <div class="section">
+            <div class="section-header-container">
+                <span class="section-header-text">O PROCESSO ELEITORAL</span>
             </div>
-
-            <div class="section">
-                <div class="section-header-container">
-                    <span class="section-header-text">COMO FUNCIONAM AS ELEIÇÕES</span>
-                </div>
-                <div class="section-content">
-                    O processo eleitoral envolve uma série de etapas que vão desde a emissão do título de eleitor até a votação e a apuração dos resultados.
-                </div>
+            <div class="section-content">
+                O processo eleitoral não começa nem termina no dia da votação. A preparação para uma eleição pode ter início logo após o encerramento dopleito anterior, funcionando como um ciclo contínuo de organização que pode se estender por aproximadamente dois anos até a próxima eleição.
+                Esse funcionamento contínuo é reforçado pelo calendário oficial estabelecido pelo Tribunal Superior Eleitoral. Nas eleições de 2026, por exemplo, algumas etapas começaram ainda em outubro de 2025, como a liberação do acesso antecipado aos sistemas eleitorais para entidades fiscalizadoras. De acordo com a resolução que define o calendário eleitoral, as atividades se iniciam cerca de um ano antes do primeiro turno, incluindo fases de planejamento, testes e fiscalização dos sistemas.
+                Além da dimensão técnica, o calendário também organiza etapas fundamentais da disputa política. Em 2026, a janela de migração partidária ocorreu entre março e abril, período em que parlamentares puderam trocar de partido para concorrer às eleições. O prazo para filiação partidária e definição de domicílio eleitoral foi fixado em 4 de abril, seis meses antes do primeiro turno. Esse conjunto de etapas evidencia que o processo eleitoral envolve dimensões técnicas, logísticas e políticas que se desenvolvem ao longo do tempo.
             </div>
+        </div>
 
-            <div class="section">
-                <div class="section-header-container">
-                    <span class="section-header-text">TREINAMENTO DE EQUIPES</span>
-                </div>
-                <div class="section-content">
-                    Outra parte importante dos bastidores das eleições é o treinamento das pessoas envolvidas diretamente na votação.
-                </div>
+        <div class="section">
+            <div class="section-header-container">
+                <span class="section-header-text">COMO FUNCIONAM AS ELEIÇÕES</span>
             </div>
+            <div class="section-content">
+                O processo eleitoral envolve uma série de etapas que vão desde a emissão do título de eleitor até a votação e a apuração dos resultados. Embora o eleitor tenha contato direto apenas com o momento da votação, existe uma estrutura anterior complexa que garante o funcionamento do sistema.
+                Uma das principais partes desse processo é a urna eletrônica, utilizada para registrar e contabilizar os votos de forma digital. Além da parte visível ao eleitor, há toda uma estrutura de bastidores que envolve organização, preparação técnica e testes dos sistemas utilizados. 
+                Essa dimensão, ainda pouco conhecida pelo público, é fundamental para que as eleições ocorram de forma organizada e dentro dos parâmetros estabelecidos.
+            </div>
+        </div>
 
-            <div class="section">
-                <div class="section-header-container">
-                    <span class="section-header-text">ORGANIZAÇÃO E LOGÍSTICA</span>
-                </div>
+        <div class="section">
+            <div class="section-header-container">
+                <span class="section-header-text">TREINAMENTO DE EQUIPES</span>
+            </div>
+            <div class="section-content">
+                Outra parte importante dos bastidores das eleições é o treinamento das pessoas envolvidas diretamente na votação. Mesários, técnicos e demais colaboradores passam por orientações específicas para desempenhar suas funções de forma adequada no dia da eleição.
+                Os mesários são responsáveis por organizar a seção eleitoral, conferir os documentos dos eleitores e garantir o correto andamento da votação. Já as equipes técnicas atuam na instalação, manutenção e eventual substituição das urnas eletrônicas, além de prestar suporte durante o processo. Esse preparo contribui para reduzir falhas e assegurar um atendimento mais eficiente ao eleitor.
+            </div>
+        </div>
+  <script src="script.js"></script>
+ </body>
+</html>
