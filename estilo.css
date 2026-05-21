@@ -1,3 +1,4 @@
+/* --- VARIÁVEIS --- */
 :root {
     --green-theme: #006b33; 
     --green-dark: #004d25;
@@ -81,6 +82,12 @@ header {
     flex-shrink: 0;
 }
 
+.icon-circle svg {
+    width: 12px;
+    height: 12px;
+    fill: var(--green-theme);
+}
+
 /* --- MENU HAMBÚRGUER --- */
 .menu-toggle {
     display: none;
@@ -105,9 +112,18 @@ header {
     transform-origin: 1px;
 }
 
-.menu-toggle.open span:nth-child(1) { transform: rotate(45deg); }
-.menu-toggle.open span:nth-child(2) { opacity: 0; transform: translateX(20px); }
-.menu-toggle.open span:nth-child(3) { transform: rotate(-45deg); }
+.menu-toggle.open span:nth-child(1) {
+    transform: rotate(45deg);
+}
+
+.menu-toggle.open span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(20px);
+}
+
+.menu-toggle.open span:nth-child(3) {
+    transform: rotate(-45deg);
+}
 
 /* --- OVERLAY --- */
 .overlay {
@@ -121,7 +137,9 @@ header {
     z-index: 1050;
 }
 
-.overlay.active { display: block; }
+.overlay.active {
+    display: block;
+}
 
 /* --- CONTEÚDO PRINCIPAL --- */
 .container {
@@ -224,7 +242,9 @@ footer {
 
 /* --- RESPONSIVIDADE MOBILE --- */
 @media (max-width: 768px) {
-    .menu-toggle { display: flex; }
+    .menu-toggle {
+        display: flex;
+    }
 
     .header-info {
         position: fixed;
@@ -253,7 +273,9 @@ footer {
         margin-bottom: 10px;
     }
 
-    .main-title { font-size: 1.6rem; }
+    .main-title {
+        font-size: 1.6rem;
+    }
     
     .section-content {
         text-align: left;
