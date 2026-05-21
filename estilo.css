@@ -40,6 +40,45 @@ header {
     width: auto;
 }
 
+/* --- ESTILO DA ENQUETE --- */
+.enquete-card {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    margin: 30px 0;
+    border: 1px solid #eee;
+    text-align: center;
+}
+
+.enquete-card h3 {
+    color: var(--green-theme);
+    margin-top: 0;
+    font-size: 1.2rem;
+}
+
+.enquete-card p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    color: #444;
+}
+
+.btn-voto {
+    background-color: var(--green-theme);
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    margin: 0 5px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.btn-voto:hover {
+    background-color: var(--green-dark);
+}
+
 /* --- NAVEGAÇÃO DESKTOP --- */
 .header-info {
     display: flex;
