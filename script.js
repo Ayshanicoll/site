@@ -40,15 +40,22 @@ const supabase = supabase.createClient(
 
 // 2. Função para registrar o voto
 async function registrarVoto(perguntaId, escolha) {
-    const { data, error } = await supabase
+    // Desabilita os botões para evitar clique duplo
+    const botoes = document.querySelectorAll('.btn-voto');
+    botoes.forEach(btn => btn.disabled = true);
+
+    const { error } = await supabase
         .from('votos')
         .insert([{ pergunta_id: perguntaId, resposta: escolha }]);
 
     if (error) {
         console.error("Erro ao votar:", error);
         alert("Ops, algo deu errado. Tente novamente.");
+        // Reabilita os botões se houver erro para o usuário tentar de novo
+        botoes.forEach(btn => btn.disabled = false);
     } else {
-        alert("Voto registrado com sucesso! Obrigado pela participação.");
+        // Altera o conteúdo do card para agradecer o voto
+        document.getElementById('enquete-section').innerHTML = '<h3>Obrigado pelo seu voto!</h3>';
     }
 }
 
