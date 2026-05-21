@@ -44,6 +44,7 @@ header {
 .header-info {
     display: flex;
     gap: 10px;
+    z-index: 1060;
 }
 
 .contact-button {
@@ -82,7 +83,7 @@ header {
 
 /* --- MENU HAMBÚRGUER --- */
 .menu-toggle {
-    display: none;
+display: none;
     flex-direction: column;
     justify-content: space-around;
     width: 30px;
@@ -91,7 +92,8 @@ header {
     border: none;
     cursor: pointer;
     padding: 0;
-    z-index: 1100;
+    z-index: 2000; /* Aumente este valor para garantir que fique no topo */
+    position: relative;
 }
 
 .menu-toggle span {
