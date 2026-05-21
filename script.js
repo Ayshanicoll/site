@@ -1,44 +1,36 @@
-// 1. Inicializa o Supabase (fora de qualquer bloco)
-const supabase = supabase.createClient(
-    'https://ydvnkdfgqmxfnmylffka.supabase.co', 
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlkdm5rZGZncW14Zm5teWxmZmthIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkzMjEwMDYsImV4cCI6MjA5NDg5NzAwNn0.BeGtXfdZ990uSaAjel_01yg2HtX8boshUh50SDN64pw'
-);
+// Substitua os valores abaixo EXATAMENTE pelo que está no painel do Supabase
+const SUPABASE_URL = 'https://ydvnkdfgqmxfnmylffka.supabase.co';
+const SUPABASE_ANON_KEY = 'SUA_CHAVE_ANON_PUBLIC_AQUI'; 
 
-// 2. Função global (para o onclick do HTML encontrar)
-async function registrarVoto(perguntaId, escolha) {
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+window.registrarVoto = async function(perguntaId, escolha) {
+    console.log("Tentando votar na pergunta:", perguntaId, "escolha:", escolha);
+    
+    // Desabilita botões
     const divPergunta = document.getElementById('pergunta' + perguntaId);
-    if (!divPergunta) return;
-
-    // Desabilita os botões para evitar cliques múltiplos
     const botoes = divPergunta.querySelectorAll('button');
     botoes.forEach(btn => btn.disabled = true);
 
-    // Envia o voto para o Supabase
-    const { error } = await supabase
-        .from('votos')
-        .insert([{ pergunta_id: perguntaId, resposta: escolha }]);
+    try {
+        const { data, error } = await supabase
+            .from('votos')
+            .insert([
+                { 
+                    pergunta_id: perguntaId, 
+                    resposta: escolha 
+                }
+            ]);
 
-    if (error) {
-        console.error("Erro ao enviar voto:", error);
-        alert("Erro ao registrar voto. Verifique o console (F12).");
+        if (error) {
+            console.error("Detalhes do erro do Supabase:", error);
+            alert("Erro no Supabase: " + error.message);
+            botoes.forEach(btn => btn.disabled = false);
+        } else {
+            divPergunta.innerHTML = '<p>Obrigado pelo seu voto!</p>';
+        }
+    } catch (err) {
+        console.error("Erro inesperado:", err);
         botoes.forEach(btn => btn.disabled = false);
-    } else {
-        divPergunta.innerHTML = '<p>Obrigado pelo seu voto!</p>';
     }
-}
-
-// 3. Menu (DOMContentLoaded único)
-document.addEventListener('DOMContentLoaded', function() {
-    const btn = document.getElementById('menu-btn');
-    const menu = document.getElementById('nav-menu');
-    const overlay = document.getElementById('overlay');
-
-    if (btn) {
-        btn.addEventListener('click', function() {
-            btn.classList.toggle('open');
-            menu.classList.toggle('active');
-            overlay.classList.toggle('active');
-            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : 'auto';
-        });
-    }
-});
+};
