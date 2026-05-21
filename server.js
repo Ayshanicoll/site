@@ -116,6 +116,6 @@ app.post('/api/votar', async (req, res) => {
 
 //Iniciar servidor
 app.listen(port, () => {
-    console.log(`Servidor rodando em http://localhost:${port}`);
+    console.log(https://siteenqueteuel.onrender.com);
     criarTabelas();
 });
